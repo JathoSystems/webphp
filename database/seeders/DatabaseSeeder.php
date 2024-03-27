@@ -18,5 +18,23 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        // Add roles
+        \App\Models\Role::factory()->create([
+            'name' => 'particulier',
+            'description' => 'Particuliere adverteerder',
+        ]);
+
+        \App\Models\Role::factory()->create([
+            'name' => 'zakelijk',
+            'description' => 'Zakelijke verkoper',
+        ]);
+
+        \App\Models\Role::factory()->create([
+            'name' => 'admin',
+            'description' => 'Administrator',
+        ]);
+
+
     }
 }
