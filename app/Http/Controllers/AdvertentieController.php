@@ -85,6 +85,7 @@ class AdvertentieController extends Controller
     {
         $advertentie = auth()->user()->advertenties()->findOrFail($id);
 
+        auth()->user()->favoriete_advertenties()->detach($advertentie);
         $advertentie->delete();
 
         return redirect()->route('advertentie.index');
