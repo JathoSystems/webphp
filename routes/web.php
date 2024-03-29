@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\adController;
+use App\Http\Controllers\BiddingController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -47,5 +48,10 @@ Route::post('/account/roles', [AccountController::class, 'updateRoles'])
 
 //-- Ads
 Route::resource('ads', adController::class);
+
+//-- Biddings
+Route::resource('biddings', BiddingController::class);
+Route::get('/biddings/create/{adId}', [BiddingController::class, 'create'])->name('biddings.create');
+
 
 require __DIR__.'/auth.php';
