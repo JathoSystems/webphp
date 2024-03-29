@@ -38,11 +38,19 @@
                         @endif
                     </td>
                     <td>
-                        <a class="button" href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
+                        <form action="{{ route('advertentie.edit', $advertentie) }}" method="get">
+                            @csrf
+                            <button type="submit">Bewerken</button>
+                        </form>
                         <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit">Verwijderen</button>
+                        </form>
+                        <form action="{{ route('advertentie.favorite', $advertentie) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="button">Favoriet</button>
                         </form>
                     </td>
                 </tr>

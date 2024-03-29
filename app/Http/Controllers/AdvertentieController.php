@@ -89,4 +89,21 @@ class AdvertentieController extends Controller
 
         return redirect()->route('advertentie.index');
     }
+
+    public function markFavorite(Advertentie $advertentie)
+    {
+        //-- 1. Kijk of de advertentie al is gemarkeerd als favoriet
+        $isFavorite = auth()->user()->favoriete_advertenties()->where('advertentie_id', $advertentie->id)->exists();
+
+        //-- 2. Als de advertentie nog niet gemarkeerd is, markeer hem
+        if (!$isFavorite) {
+            auth()->user()->favoriete_advertenties()->attach($advertentie);
+            return redirect()->back()->with('success', 'Advertentie gemarkeerd als favoriet.');
+        }
+
+        //-- 3. Als de advertentie al wel gemarkeerd is, de-markeer hem.
+        auth()->user()->favoriete_advertenties()->detach($advertentie);
+        return redirect()->back()->with('success', 'Advertentie gedemarkeerd als favoriet.');
+        
+    } 
 }

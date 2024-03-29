@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Advertentie::class);
     }
+
+    public function favoriete_advertenties()
+    {
+        return $this->belongsToMany(Advertentie::class, 'favoriete_advertenties', 'user_id', 'advertentie_id')->withTimestamps();
+    }
 }
