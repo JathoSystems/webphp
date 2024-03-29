@@ -10,8 +10,11 @@ class AdvertentieController extends Controller
     public function index() // Simpele lijst van advertenties
     {
         // both the advertenties and verhuur_advertenties 
+        $favorieten = false;
+
         return view('advertentie.index', [
             'advertenties' => Advertentie::all(),
+            'favorieten' => $favorieten,
         ]);
     }
 
@@ -107,4 +110,15 @@ class AdvertentieController extends Controller
         return redirect()->back()->with('success', 'Advertentie gedemarkeerd als favoriet.');
         
     } 
+
+    public function favorieten(){
+
+        $advertenties = auth()->user()->favoriete_advertenties()->get();
+        $favorieten = true;
+
+        return view('advertentie.index', [
+            'advertenties' => $advertenties,
+            'favorieten' => $favorieten,
+        ]);
+    }
 }

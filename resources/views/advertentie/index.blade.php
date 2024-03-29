@@ -9,8 +9,14 @@
 </head>
 <body>
     
-    <h1>Advertenties</h1>
-    <a class="button" href="{{ route('advertentie.create') }}">Advertentie toevoegen</a><br>
+    @if(!$favorieten)
+        <h1>Advertenties</h1>
+    @else
+        <h1>Favoriete advertenties</h1>
+    @endif
+    @if(!$favorieten)
+        <a class="button" href="{{ route('advertentie.create') }}">Advertentie toevoegen</a><br>
+    @endif
     <table>
         <thead>
             <tr>
@@ -28,8 +34,17 @@
                     <td>{{ $advertentie->title }}</td>
                     <td>{{ $advertentie->description }}</td>
                     <td>{{ $advertentie->price }}</td>
-                    <td><img src="storage/images/{{ $advertentie->image_url }}" alt
-                        ="{{ $advertentie->titel }}" style="width: 100px;"></td>
+                    @if ($favorieten)
+                        @php
+                            $img_src = "../storage/images/";
+                        @endphp
+                    @else
+                        @php
+                            $img_src = "storage/images/";
+                        @endphp
+                    @endif
+
+                    <td><img src="{{ asset($img_src . $advertentie->image_url) }}" alt="{{ $advertentie->titel }}" style="width: 100px;"></td>
                     <td>
                         @if ($advertentie->type === 'verhuur_advertentie')
                             Verhuur advertentie
@@ -38,15 +53,18 @@
                         @endif
                     </td>
                     <td>
-                        <form action="{{ route('advertentie.edit', $advertentie) }}" method="get">
+
+                        @if(!$favorieten)
+                            <form action="{{ route('advertentie.edit', $advertentie) }}" method="get">
                             @csrf
                             <button type="submit">Bewerken</button>
-                        </form>
-                        <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit">Verwijderen</button>
-                        </form>
+                            </form>
+                            <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit">Verwijderen</button>
+                            </form>
+                        @endif
                         <form action="{{ route('advertentie.favorite', $advertentie) }}" method="POST">
                             @csrf
                             @method('PUT')
