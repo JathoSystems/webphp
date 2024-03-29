@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Advertentie bijwerken</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <h1>Advertentie bijwerken</h1>
@@ -31,7 +32,7 @@
         @enderror
 
         <label for="price">Prijs</label>
-        <input type="number" name="price" id="price" value="{{ $advertentie->price }}">
+        <input type="number" name="price" id="price" value="{{ $advertentie->price }}" step=".01">
         @error('price')
             <p>{{ $message }}</p>
         @enderror
@@ -58,6 +59,6 @@
 
         <button type="submit">Opslaan</button>
     </form>
-    <a href="{{ route('advertentie.index') }}">Terug naar overzicht</a>
+    <a class="button" href="{{ route('advertentie.index') }}">Terug naar overzicht</a>
 </body>
 </html>

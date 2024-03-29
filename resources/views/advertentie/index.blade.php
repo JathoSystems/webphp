@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Advertenties</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     
     <h1>Advertenties</h1>
-    <a href="{{ route('advertentie.create') }}">Advertentie toevoegen</a>
+    <a class="button" href="{{ route('advertentie.create') }}">Advertentie toevoegen</a><br>
     <table>
         <thead>
             <tr>
@@ -37,7 +38,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
+                        <a class="button" href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
                         <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
                             @csrf
                             @method('delete')
