@@ -45,7 +45,8 @@ body {
 
 .container {
     max-width: 1200px;
-    padding: 0 1rem;
+    padding: 1rem;
+    margin: auto;
 }
 
 /* Navigatie */
@@ -255,6 +256,18 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: var(--accent-color);
+}
+
+.center {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 @media screen and (max-width: 1280px) {
