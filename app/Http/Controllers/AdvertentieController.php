@@ -37,7 +37,7 @@ class AdvertentieController extends Controller
     {
         $advertentie = auth()->user()->advertenties()->findOrFail($id);
 
-        return view('advertentie.create', [
+        return view('advertentie.edit', [
             'advertentie' => $advertentie,
         ]);
     }

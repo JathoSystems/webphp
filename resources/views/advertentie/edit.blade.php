@@ -1,40 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Advertenties</title>
+    <title>Advertentie bijwerken</title>
 </head>
-
 <body>
-    <h1>Advertentie toevoegen</h1>
-    <form action="{{ route('advertentie.store') }}" method="post">
+    <h1>Advertentie bijwerken</h1>
+    <form action="{{ route('advertentie.update', $advertentie) }}" method="post">
         @csrf
+        @method('put')
         <label for="title">Titel</label>
-        <input type="text" name="title" id="title" value="{{ old('title') }}">
+        <input type="text" name="title" id="title" value="{{ $advertentie->title }}">
         @error('title')
             <p>{{ $message }}</p>
         @enderror
 
         <label for="description">Omschrijving</label>
-        <textarea name="description" id="description">{{ old('description') }}</textarea>
+        <textarea name="description" id="description">{{ $advertentie->description }}</textarea>
         @error('description')
             <p>{{ $message }}</p>
         @enderror
 
         <label for="price">Prijs</label>
-        <input type="number" name="price" id="price" value="{{ old('price') }}">
+        <input type="number" name="price" id="price" value="{{ $advertentie->price }}">
         @error('price')
             <p>{{ $message }}</p>
         @enderror
 
         <label for="expiration_date">Vervaldatum</label>
-        <input type="date" name="expiration_date" id="expiration_date" value="{{ old('expiration_date') }}">
-        @error('expiration_date')
-            <p>{{ $message }}</p>
-        @enderror
+        <input type="date" name="expiration_date" id="expiration_date" value="{{ $advertentie->expiration_date->format('Y-m-d') }}">
 
         {{-- Hidden field status="beschikbaar" --}}
         <input type="hidden" name="status" value="beschikbaar">
@@ -47,5 +43,4 @@
     </form>
     <a href="{{ route('advertentie.index') }}">Terug naar overzicht</a>
 </body>
-
 </html>

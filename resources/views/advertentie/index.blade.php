@@ -16,20 +16,23 @@
                 <th>Titel</th>
                 <th>Omschrijving</th>
                 <th>Prijs</th>
-                <th>Foto</th>
+                {{-- <th>Foto</th> --}}
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($advertenties as $advertentie)
                 <tr>
-                    <td>{{ $advertentie->titel }}</td>
-                    <td>{{ $advertentie->omschrijving }}</td>
-                    <td>{{ $advertentie->prijs }}</td>
+                    <td>{{ $advertentie->title }}</td>
+                    <td>{{ $advertentie->description }}</td>
+                    <td>{{ $advertentie->price }}</td>
                     {{-- <td><img src="{{ asset('storage/' . $advertentie->foto) }}" alt
                         ="{{ $advertentie->titel }}" style="width: 100px;"></td>
                     <td> --}}
+                    <td>
                         <a href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
+                    </td>
+                    <td>
                         <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
                             @csrf
                             @method('delete')
