@@ -10,7 +10,7 @@
 
 <body>
     <h1>Advertentie toevoegen</h1>
-    <form action="{{ route('advertentie.store') }}" method="post">
+    <form action="{{ route('advertentie.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <label for="title">Titel</label>
         <input type="text" name="title" id="title" value="{{ old('title') }}">
@@ -33,6 +33,12 @@
         <label for="expiration_date">Vervaldatum</label>
         <input type="date" name="expiration_date" id="expiration_date" value="{{ old('expiration_date') }}">
         @error('expiration_date')
+            <p>{{ $message }}</p>
+        @enderror
+
+        <label for="image">Afbeelding</label>
+        <input type="file" name="image" id="image">
+        @error('image')
             <p>{{ $message }}</p>
         @enderror
 

@@ -16,7 +16,7 @@
                 <th>Titel</th>
                 <th>Omschrijving</th>
                 <th>Prijs</th>
-                {{-- <th>Foto</th> --}}
+                <th>Foto</th>
                 <th></th>
             </tr>
         </thead>
@@ -26,9 +26,9 @@
                     <td>{{ $advertentie->title }}</td>
                     <td>{{ $advertentie->description }}</td>
                     <td>{{ $advertentie->price }}</td>
-                    {{-- <td><img src="{{ asset('storage/' . $advertentie->foto) }}" alt
+                    <td><img src="storage/images/{{ $advertentie->image_url }}" alt
                         ="{{ $advertentie->titel }}" style="width: 100px;"></td>
-                    <td> --}}
+                    <td>
                     <td>
                         <a href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
                     </td>

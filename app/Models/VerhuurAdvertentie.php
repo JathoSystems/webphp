@@ -11,6 +11,7 @@ class VerhuurAdvertentie extends Model
 
     protected $fillable = [
         'user_id',
+        'image_url',
         'title',
         'description',
         'price',

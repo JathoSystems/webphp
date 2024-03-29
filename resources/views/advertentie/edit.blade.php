@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Advertentie bijwerken</h1>
-    <form action="{{ route('advertentie.update', $advertentie) }}" method="post">
+    <form action="{{ route('advertentie.update', $advertentie) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
         <label for="title">Titel</label>
@@ -31,6 +31,16 @@
 
         <label for="expiration_date">Vervaldatum</label>
         <input type="date" name="expiration_date" id="expiration_date" value="{{ $advertentie->expiration_date->format('Y-m-d') }}">
+        @error('expiration_date')
+            <p>{{ $message }}</p>
+        @enderror
+
+        <label for="image">Afbeelding</label>
+        <input type="file" name="image" id="image">
+        @error('image')
+            <p>{{ $message }}</p>
+        @enderror
+
 
         {{-- Hidden field status="beschikbaar" --}}
         <input type="hidden" name="status" value="beschikbaar">
