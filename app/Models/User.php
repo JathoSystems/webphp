@@ -58,4 +58,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Advertentie::class);
     }
+
+    public function canAdvertise()
+    {
+        $can = false;
+        foreach ($this->roles as $role) {
+            if ($role->name == 'particulier' || $role->name == 'zakelijk') {
+                $can = true;
+            }
+        }
+        return $can;
+    }
 }

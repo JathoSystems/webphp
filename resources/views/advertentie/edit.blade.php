@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Advertentie bijwerken</title>
-    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <x-navbar />
     <h1>Advertentie bijwerken</h1>
     <form action="{{ route('advertentie.update', $advertentie) }}" method="post" enctype="multipart/form-data">
         @csrf
