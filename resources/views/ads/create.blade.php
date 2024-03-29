@@ -75,10 +75,8 @@
                     </select>
                 </div>
 
-
-
                 <!-- Verborgen veld om te faken dat we een image al hebben geüpload -->
-                <input type="hidden" name="existing_image" id="existing_image" value="{{ $existingThumbnailSrc ?? '' }}">
+                <input type="hidden" name="existing_image" id="existing_image" value="{{ $existingImageSrc ?? '' }}">
 
                 <div class="mb-4">
                     <label for="image" class="block text-sm font-bold mb-2">Afbeelding:</label>
@@ -87,13 +85,8 @@
                         <input type="file" class="hidden" id="image" name="image" onchange="previewImage(event)">
                     </label>
                 </div>
-                <div id="thumbnail-preview" class="thumbnail-preview"></div>
+                <div id="image-preview" class="thumbnail-preview"></div>
 
-
-                <!-- Verborgen veld om te faken dat we images al hebben geüpload -->
-                <input type="hidden" name="existing_images" id="existing_images" value="{{ $existing_images ?? '' }}">
-
-                
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     @if(isset($ad))
                         Bijwerken
@@ -128,29 +121,27 @@
             //-- Script toegevoegd waarbij we de preview vullen als er een foto is om te "bewerken"
             document.addEventListener('DOMContentLoaded', function() {
                 @php
-                    $existingThumbnailSrc = null;
-                    $imagesArray = [];
+                    $existingImageSrc = null;
                     if (isset($ad)) {
-                        $thumbnail = isset($ad['thumbnail']) ? json_decode(trim(html_entity_decode($ad['thumbnail'])), true) : null;
-                        if ($thumbnail) {
-                            $existingThumbnailSrc = Storage::disk('content_CMS')->url($thumbnail['url']);
+                        $image = isset($ad['image']) ? json_decode(trim(html_entity_decode($ad['image'])), true) : null;
+                        if ($image) {
+                            $existingImageSrc = Storage::disk('content_CMS')->url($image['url']);
                         }
 
                     }
                 @endphp
 
-                @if(isset($ad) && $existingThumbnailSrc)
-                    const existingThumbnailSrc = @json($existingThumbnailSrc);
-                    const thumbnailInput = document.getElementById('existing_thumbnail');
+                @if(isset($ad) && $existingImageSrc)
+                    const existingImageSrc = @json($existingImageSrc);
+                    const imageInput = document.getElementById('existing_image');
 
-                    const preview = document.getElementById('thumbnail-preview');
+                    const preview = document.getElementById('image-preview');
                     const img = document.createElement('img');
-                    img.src = existingThumbnailSrc;
+                    img.src = existingImageSrc;
                     img.className = 'w-32 h-32 object-cover';
                     preview.appendChild(img);
 
-                    thumbnailInput.value = existingThumbnailSrc;
-
+                    imageInput.value = existingImageSrc;
                 @endif
 
             });

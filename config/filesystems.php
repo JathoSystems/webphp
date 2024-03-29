@@ -55,7 +55,13 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
-
+        'content_CMS' => [
+            'driver' => 'local',
+            'root' => storage_path('app/content_CMS'),
+            'url' => env('APP_URL') . '/content_CMS',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
     ],
 
     /*
@@ -71,6 +77,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('content_CMS') => storage_path('app/content_CMS'),
     ],
 
 ];

@@ -15,7 +15,8 @@
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-700">
                     <thead class="text-xs text-gray-700 uppercase dark:bg-gray-900 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3 hidden lg:block">Titel</th>
+                            <th scope="col" class="px-6 py-3 hidden lg:block">Afbeelding</th>
+                            <th scope="col" class="px-6 py-3">Titel</th>
                             <th scope="col" class="px-6 py-3">Omschrijving</th>
                             <th scope="col" class="px-6 py-3">Prijs</th>
                             <th scope="col" class="px-6 py-3">Type</th>
@@ -25,14 +26,14 @@
                     <tbody>
                         @foreach($ads as $ad)
                             @php
-                                $thumbnail = isset($ad['thumbnail']) ? json_decode(trim(html_entity_decode($ad['thumbnail'])), true) : null;
+                                $image = isset($ad['image']) ? json_decode(trim(html_entity_decode($ad['image'])), true) : null;
                             @endphp
 
                         <tr>
                             <td class="py-2 px-4 border-b hidden lg:block">
-                                @if ($thumbnail)
-                                    <!-- Gebruik $thumbnail in je HTML of Blade-code -->
-                                    <img src="{{ Storage::disk('content_CMS')->url($thumbnail['url']) }}" alt="thumbnail" style="height: 15vh; width: 20vw;"></style>
+                                @if ($image)
+                                    <!-- Gebruik $image in je HTML of Blade-code -->
+                                    <img src="{{ Storage::disk('content_CMS')->url($image['url']) }}" alt="image" style="height: 15vh; width: 20vw;"></style>
                                 @endif
                             </td>
                             <td class="py-2 px-4 border-b">{{ $ad->title }}</td>
