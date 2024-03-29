@@ -144,6 +144,12 @@ class adController extends Controller
     public function destroy(string $id)
     {
         $ad = Ad::findOrFail($id);
+        // Delete the image if it exists
+        $image = json_decode($ad->image, true);
+        if (!empty($image['url']) && Storage::disk('content_CMS')->exists($image['url'])) {
+            Storage::disk('content_CMS')->delete($image['url']);
+        }
+
         $ad->delete();
         return redirect()->route('ads.index');
     }
