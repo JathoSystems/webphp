@@ -17,6 +17,7 @@
                 <th>Omschrijving</th>
                 <th>Prijs</th>
                 <th>Foto</th>
+                <th>Type</th>
                 <th></th>
             </tr>
         </thead>
@@ -29,10 +30,14 @@
                     <td><img src="storage/images/{{ $advertentie->image_url }}" alt
                         ="{{ $advertentie->titel }}" style="width: 100px;"></td>
                     <td>
-                    <td>
-                        <a href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
+                        @if ($advertentie->type === 'verhuur_advertentie')
+                            Verhuur advertentie
+                        @else
+                            Advertentie
+                        @endif
                     </td>
                     <td>
+                        <a href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
                         <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
                             @csrf
                             @method('delete')

@@ -11,6 +11,7 @@ class Advertentie extends Model
 
     protected $fillable = [
         'user_id',
+        'type', // 'advertentie' or 'verhuur_advertentie
         'image_url',
         'title',
         'description',
@@ -18,6 +19,8 @@ class Advertentie extends Model
         'expiration_date',
         'status',
         'QR_code',
+        'slijtage',
+        'image_upload',
     ];
     
     public function user()

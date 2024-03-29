@@ -11,6 +11,13 @@
     <form action="{{ route('advertentie.update', $advertentie) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
+
+        <label for="type">Type Advertentie</label>
+        <select name="type" id="type">
+            <option value="verhuur_advertentie" {{ $advertentie->type === 'verhuur_advertentie' ? 'selected' : '' }}>Verhuur advertentie</option>
+            <option value="advertentie" {{ $advertentie->type === 'advertentie' ? 'selected' : '' }}>Advertentie</option>
+        </select>
+
         <label for="title">Titel</label>
         <input type="text" name="title" id="title" value="{{ $advertentie->title }}">
         @error('title')

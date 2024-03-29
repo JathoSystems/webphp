@@ -9,6 +9,7 @@ class AdvertentieController extends Controller
 {
     public function index() // Simpele lijst van advertenties
     {
+        // both the advertenties and verhuur_advertenties 
         return view('advertentie.index', [
             'advertenties' => Advertentie::all(),
         ]);

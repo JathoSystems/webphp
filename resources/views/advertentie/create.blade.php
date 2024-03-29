@@ -12,6 +12,13 @@
     <h1>Advertentie toevoegen</h1>
     <form action="{{ route('advertentie.store') }}" method="post" enctype="multipart/form-data">
         @csrf
+
+        <label for="type">Type Advertentie</label>
+        <select name="type" id="type">
+            <option value="verhuur_advertentie" {{ old('type') === 'verhuur_advertentie' ? 'selected' : '' }}>Verhuur advertentie</option>
+            <option value="advertentie" {{ old('type') === 'advertentie' ? 'selected' : '' }}>Advertentie</option>
+        </select>
+        
         <label for="title">Titel</label>
         <input type="text" name="title" id="title" value="{{ old('title') }}">
         @error('title')
