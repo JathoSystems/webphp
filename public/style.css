@@ -196,6 +196,7 @@ table td {
 
 .ads {
     display: flex;
+    flex-direction: row;
     gap: 1rem;
     flex-wrap: wrap;
 }
@@ -205,7 +206,7 @@ table td {
     color: var(--secondary-foreground-color);
     padding: 1rem;
     border-radius: 5px;
-    width: 100%;
+    width: 150px;
 }
 
 .ad h3 {
@@ -223,6 +224,37 @@ table td {
     width: 100%;
     height: auto;
     border-radius: 5px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 400px;
+}
+
+input, textarea, select {
+    padding: .5rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="submit"] {
+    background-color: var(--secondary-color);
+    color: var(--secondary-foreground-color);
+    border: none;
+    border-radius: 5px;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: var(--accent-color);
 }
 
 @media screen and (max-width: 1280px) {
