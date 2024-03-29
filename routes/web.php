@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdvertentieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,5 +41,17 @@ Route::get('/account/roles/edit', [AccountController::class, 'editRoles'])
 Route::post('/account/roles', [AccountController::class, 'updateRoles'])
     ->middleware('auth')
     ->name('account.updateroles');
+
+Route::get('advertenties', [AdvertentieController::class, 'index'])
+    ->middleware('auth')
+    ->name('advertentie.index');
+
+Route::get('advertenties/create', [AdvertentieController::class, 'create'])
+    ->middleware('auth')
+    ->name('advertentie.create');
+
+Route::post('advertenties', [AdvertentieController::class, 'store'])
+    ->middleware('auth')
+    ->name('advertentie.store');
 
 require __DIR__.'/auth.php';
