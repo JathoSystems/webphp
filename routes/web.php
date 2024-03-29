@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\adController;
+
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +43,9 @@ Route::get('/account/roles/edit', [AccountController::class, 'editRoles'])
 Route::post('/account/roles', [AccountController::class, 'updateRoles'])
     ->middleware('auth')
     ->name('account.updateroles');
+
+
+//-- Ads
+Route::resource('ads', adController::class);
 
 require __DIR__.'/auth.php';
