@@ -59,8 +59,27 @@
                 <a href="{{ route('ads.create') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
                     Nieuwe advertentie toevoegen
                 </a>
-                
 
+
+
+                <br><br>
+                <!-- Toon de pagineringlinks -->
+                {{ $ads->links() }}
+
+                <!-- Toon de "Volgende" en "Vorige" knoppen -->
+                <div class="flex justify-between mt-4">
+                    @if ($ads->onFirstPage())
+                        <span></span> <!-- Geen "Vorige" knop als het de eerste pagina is -->
+                    @else
+                        <a href="{{ $ads->previousPageUrl() }}" class="text-blue-500">&larr; Vorige</a>
+                    @endif
+
+                    @if ($ads->hasMorePages())
+                        <a href="{{ $ads->nextPageUrl() }}" class="text-blue-500">Volgende &rarr;</a>
+                    @else
+                        <span></span> <!-- Geen "Volgende" knop als het de laatste pagina is -->
+                    @endif
+                </div>
             </div>
         </div>
     </div>
