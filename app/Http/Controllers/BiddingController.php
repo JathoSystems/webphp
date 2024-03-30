@@ -28,6 +28,12 @@ class BiddingController extends Controller
             'price' => 'required',
         ]);
 
+        // Validate if the bid is higher than the current highest bid
+        $highestBid = Bidding::where('ad_id', $request->ad_id)->max('price');
+        if ($request->price <= $highestBid) {
+            return redirect()->back()->withErrors(['price' => __("Bid error")]);
+        }
+
         Bidding::create($request->all());
 
         return redirect()->route('bidding.index');
@@ -52,6 +58,12 @@ class BiddingController extends Controller
             'ad_id' => 'required',
             'price' => 'required',
         ]);
+
+        // Validate if the bid is higher than the current highest bid
+        $highestBid = Bidding::where('ad_id', $request->ad_id)->max('price');
+        if ($request->price <= $highestBid) {
+            return redirect()->back()->withErrors(['price' => __("Bid error")]);
+        }
 
         $bidding->update($request->all());
 

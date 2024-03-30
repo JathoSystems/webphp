@@ -17,6 +17,9 @@
             @csrf
             <label for="price">Bedrag:</label>
             <input type="number" name="price" id="price" step="0.01">
+            @error('price')
+                <p class="error">{{ $message }}</p>
+            @enderror
             {{-- Hidden field for product and user id --}}
             <input type="hidden" name="ad_id" value="{{ $advertentie->id }}">
             <input type="hidden" name="user_id" value="{{ auth()->id() }}">

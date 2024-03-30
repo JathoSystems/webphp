@@ -62,23 +62,26 @@
                             @endif
                         </td>
                         <td>
-
-                            @if (!$favorieten)
-                                <form action="{{ route('advertentie.edit', $advertentie) }}" method="get">
+                            <div class="buttons">
+                                @if (!$favorieten && $advertentie->user_id === auth()->id())
+                                    <form action="{{ route('advertentie.edit', $advertentie) }}" method="get">
+                                        @csrf
+                                        <button class="button" type="submit">Bewerken</button>
+                                    </form>
+                                    <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="button" type="submit">Verwijderen</button>
+                                    </form>
+                                @endif
+                                <form action="{{ route('advertentie.favorite', $advertentie) }}" method="POST">
                                     @csrf
-                                    <button type="submit">Bewerken</button>
+                                    @method('PUT')
+                                    <button type="submit" class="button">Favoriet</button>
                                 </form>
-                                <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit">Verwijderen</button>
-                                </form>
-                            @endif
-                            <form action="{{ route('advertentie.favorite', $advertentie) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="button">Favoriet</button>
-                            </form>
+                                <a class="button"
+                                    href="{{ route('advertentie.show', $advertentie) }}">{{ __('View') }}</a>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

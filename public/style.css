@@ -197,6 +197,7 @@ table td {
 .buttons {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .ads {

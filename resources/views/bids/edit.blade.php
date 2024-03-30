@@ -18,6 +18,9 @@
             @method('PUT')
             <label for="price">Bedrag:</label>
             <input type="number" name="price" id="price" value="{{ $bidding->price }}" step=".01">
+            @error('price')
+                <p class="error">{{ $message }}</p>
+            @enderror
             <input type="hidden" name="ad_id" value="{{ $bidding->ad_id }}">
             <input type="hidden" name="user_id" value="{{ $bidding->user_id }}">
             <button class="button blue-button" type="submit">Opslaan</button>
