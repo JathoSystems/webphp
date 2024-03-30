@@ -62,4 +62,9 @@ Route::get('bidding/{bidding}/edit', [BiddingController::class, 'edit'])->middle
 Route::put('bidding/{bidding}', [BiddingController::class, 'update'])->middleware('auth')->name('bidding.update');
 Route::delete('bidding/{bidding}', [BiddingController::class, 'destroy'])->middleware('auth')->name('bidding.destroy');
 
+Route::get('company/create', [CompanyController::class, 'create'])->middleware('auth')->name('company.create');
+Route::post('company', [CompanyController::class, 'store'])->middleware('auth')->name('company.store');
+Route::get('company/{company}/edit', [CompanyController::class, 'edit'])->middleware('auth')->name('company.edit');
+Route::put('company/{company}', [CompanyController::class, 'update'])->middleware('auth')->name('company.update');
+
 require __DIR__.'/auth.php';
