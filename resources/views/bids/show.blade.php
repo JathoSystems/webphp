@@ -5,18 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{__("Bid")}}</title>
+    <title>{{ __('Bid') }}</title>
 </head>
 
 <body>
     <x-navbar />
 
     <div class="container">
-        <h1>{{__("Bid")}}</h1>
-        <p><strong>{{ $bidding->user->name }}</strong> {{__("bids")}} €{{ $bidding->price }} {{__("on")}}
+        <h1>{{ __('Bid') }}</h1>
+        <p><strong>{{ $bidding->user->name }}</strong> {{ __('bids') }} €{{ $bidding->price }} {{ __('on') }}
             <strong>{{ $bidding->ad->title }}</strong>
         </p>
-        <img src="/storage/images/{{ $bidding->ad->image_url }}" alt="{{ $bidding->ad->name }}">
+        @if ($bidding->ad->image_url === null)
+            <p>{{ __('No image') }}</p>
+        @else
+            <img src="/storage/images/{{ $bidding->ad->image_url }}" alt="{{ $bidding->ad->name }}">
+        @endif
         <div class="buttons">
             <a class="button blue-button" href="{{ route('bidding.edit', $bidding) }}">{{ __('Edit') }}</a>
             <form action="{{ route('bidding.destroy', $bidding) }}" method="post">
