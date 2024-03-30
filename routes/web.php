@@ -6,6 +6,7 @@ use App\Http\Controllers\AdvertentieController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BiddingController;
 use App\Http\Controllers\BedrijfController;
+use App\Http\Controllers\RentingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +65,14 @@ Route::get('bidding/{bidding}', [BiddingController::class, 'show'])->middleware(
 Route::get('bidding/{bidding}/edit', [BiddingController::class, 'edit'])->middleware('auth')->name('bidding.edit');
 Route::put('bidding/{bidding}', [BiddingController::class, 'update'])->middleware('auth')->name('bidding.update');
 Route::delete('bidding/{bidding}', [BiddingController::class, 'destroy'])->middleware('auth')->name('bidding.destroy');
+
+
+Route::get('renting', [RentingController::class, 'index'])->middleware('auth')->name('renting.index');
+Route::get('renting/create/{ad}', [RentingController::class, 'create'])->middleware('auth')->name('renting.create');
+Route::post('renting', [RentingController::class, 'store'])->middleware('auth')->name('renting.store');
+
+
+
 
 Route::get('company/create', [BedrijfController::class, 'create'])->middleware('auth')->name('company.create');
 Route::post('company', [BedrijfController::class, 'store'])->middleware('auth')->name('company.store');

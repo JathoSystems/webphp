@@ -11,6 +11,7 @@
         <a href="/">{{ __("Home") }}</a>
         <a href="/advertenties">{{ __("Advertisements") }}</a>
         <a href="/bidding">{{ __("Bids") }}</a>
+        <a href="/renting">{{ __("Rentings") }}</a>
         <x-navbar-account-buttons />
     </div>
 </nav>
