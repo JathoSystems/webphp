@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bieding maken</title>
+    <title>{{__("Place bid")}}</title>
 </head>
 
 <body>
@@ -21,19 +21,19 @@
                 <img src="/storage/images/{{ $advertentie->image_url }}" alt="{{ $advertentie->title }}">
                 <p>
                     @if ($advertentie->type === 'verhuur_advertentie')
-                        {{ __('Rental ad') }}
+                        {{ __('Rent advertisement') }}
                     @else
-                        {{ __('Ad') }}
+                        {{ __('Purchase advertisement') }}
                     @endif
                 </p>
             @else
-                <p class="error">Geen advertentie gevonden</p>
+                <p class="error">{{__("Adverisement not found")}}</p>
             @endisset
         </div>
-        <h1>Bieding maken</h1>
+        <h1>{{__("Place bid")}}</h1>
         <form class="form" action="{{ route('bidding.store') }}" method="post">
             @csrf
-            <label for="price">Bedrag:</label>
+            <label for="price">{{__("Amount")}}:</label>
             <input type="number" name="price" id="price" step="0.01">
             @error('price')
                 <p class="error">{{ $message }}</p>
@@ -41,7 +41,7 @@
             {{-- Hidden field for product and user id --}}
             <input type="hidden" name="ad_id" value="{{ $advertentie->id }}">
             <input type="hidden" name="user_id" value="{{ auth()->id() }}">
-            <button class="button blue-button" type="submit">Opslaan</button>
+            <button class="button blue-button" type="submit">{{__("Save")}}</button>
         </form>
         <a class="button blue-button" href="{{ route('bidding.index') }}">{{ __('Back') }}</a>
     </div>

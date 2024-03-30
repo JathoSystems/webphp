@@ -17,6 +17,12 @@
 
         <p>{{ __('Welcome to De Bazaar') }}</p>
 
+        <div class="langs">
+            <a href="{{ route('locale', 'nl') }}">NL</a>
+            <a href="{{ route('locale', 'en') }}">EN</a>
+            {{ App::getLocale() }}
+        </div>
+
         <div class="container">
             {{-- Recent ads --}}
             <h2>{{ __('Recent ads') }}</h2>

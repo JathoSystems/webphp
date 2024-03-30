@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Advertentie;
+use App;
 
 class HomeController extends Controller
 {
@@ -13,5 +14,14 @@ class HomeController extends Controller
         return view('home', [
             'advertenties' => $advertenties,
         ]);
+    }
+
+    public function setLocale(Request $request, $locale)
+    {
+        App::setLocale($locale);
+        
+        $request->session()->put('locale', $locale);
+
+        return redirect()->back();
     }
 }
