@@ -54,6 +54,8 @@ Route::delete('advertenties/{id}/delete', [AdvertentieController::class, 'destro
 Route::put('advertenties/{id}', [AdvertentieController::class, 'update'])->middleware('auth')->name('advertentie.update');
 Route::put('advertenties/{advertentie}/favorite', [AdvertentieController::class, 'markFavorite'])->middleware('auth')->name('advertentie.favorite');
 Route::get('advertenties/{id}', [AdvertentieController::class, 'show'])->middleware('auth')->name('advertentie.show');
+Route::get('importeren', [AdvertentieController::class, 'importeren'])->middleware('auth')->name('advertentie.importeren');
+Route::post('importAdvertenties', [AdvertentieController::class, 'importAdvertenties'])->middleware('auth')->name('advertentie.importAdvertenties');
 
 Route::get('bidding', [BiddingController::class, 'index'])->middleware('auth')->name('bidding.index');
 Route::get('bidding/create/{ad}', [BiddingController::class, 'create'])->middleware('auth')->name('bidding.create');
