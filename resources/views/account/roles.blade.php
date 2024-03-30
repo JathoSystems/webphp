@@ -7,6 +7,7 @@
     <title>Rollen</title>
 </head>
 <body>
+    <x-navbar />
     <h1>Rollen</h1>
     <ul>
         @foreach ($roles as $role)

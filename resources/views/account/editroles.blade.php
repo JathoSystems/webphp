@@ -7,6 +7,7 @@
     <title>Rollen bewerken</title>
 </head>
 <body>
+    <x-navbar />
     <h1>Rollen bewerken</h1>
     <form action="{{ route('account.updateroles') }}" method="post">
         @csrf

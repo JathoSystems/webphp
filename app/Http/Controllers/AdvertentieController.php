@@ -15,6 +15,15 @@ class AdvertentieController extends Controller
         ]);
     }
 
+    public function show($id) // Details van een advertentie
+    {
+        $advertentie = Advertentie::findOrFail($id);
+
+        return view('advertentie.show', [
+            'advertentie' => $advertentie,
+        ]);
+    }
+
     public function create()
     {
         return view('advertentie.create');
