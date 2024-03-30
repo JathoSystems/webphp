@@ -10,7 +10,8 @@
     <div class="links">
         <a href="/">Home</a>
         <a href="/advertenties">Advertenties</a>
-        <a href="/account/roles">Rollen</a>
+        <a href="/bidding">Biedingen</a>
+        <x-navbar-account-buttons />
     </div>
 </nav>
 <script src="/navbar.js"></script>
