@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Role;
 
 class AccountController extends Controller
 {
@@ -69,11 +70,28 @@ class AccountController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
+            'role' => 'required',
         ]);
 
         $user = \App\Models\User::create($request->all());
 
+        // Assign the role to the user if the following are chosen:
+        // 1. particulier
+        // 2. zakelijk
+        $particulier = Role::where('name', 'particulier')->first();
+        $zakelijk = Role::where('name', 'zakelijk')->first();
+        if ($request->role == 'particulier') {
+            $user->roles()->attach($particulier);
+        } elseif ($request->role == 'zakelijk') {
+            $user->roles()->attach($zakelijk);
+        }
+
         auth()->login($user);
+
+        // If user chose zakelijk, redirect to company setup page
+        if ($request->role == 'zakelijk') {
+            return redirect()->route('company.create');
+        }
 
         return redirect()->route('home');
     }
@@ -87,6 +105,11 @@ class AccountController extends Controller
 
         $user = auth()->user();
         $user->update($request->all());
+
+        // If user chose zakelijk, redirect to company setup page
+        if ($user->roles->contains('name', 'zakelijk')) {
+            return redirect()->route('company.create');
+        }
 
         return redirect()->route('account.roles');
     }

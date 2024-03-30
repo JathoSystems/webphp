@@ -10,7 +10,7 @@
     <x-navbar />
     <div class="container center gap">
         <h1>Login</h1>
-        <form class="form" action="{{ route('login') }}" method="post">
+        <form class="form" action="{{ route('account.login') }}" method="post">
             @csrf
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" autocomplete="username">

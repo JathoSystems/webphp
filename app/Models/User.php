@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
+use App\Models\Advertentie;
+use App\Models\Bedrijf;
 
 class User extends Authenticatable
 {
@@ -62,6 +64,11 @@ class User extends Authenticatable
     public function favoriete_advertenties()
     {
         return $this->belongsToMany(Advertentie::class, 'favoriete_advertenties', 'user_id', 'advertentie_id')->withTimestamps();
+    }
+
+    public function company()
+    {
+        return $this->hasOne(Bedrijf::class);
     }
   
     public function canAdvertise()
