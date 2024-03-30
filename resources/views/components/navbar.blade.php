@@ -8,9 +8,10 @@
     </div>
     <button class="menu-button" onclick="toggleNavbar()">Menu</button>
     <div class="links">
-        <a href="/">Home</a>
-        <a href="/advertenties">Advertenties</a>
-        <a href="/account/roles">Rollen</a>
+        <a href="/">{{ __("Home") }}</a>
+        <a href="/advertenties">{{ __("Advertisements") }}</a>
+        <a href="/bidding">{{ __("Bids") }}</a>
+        <x-navbar-account-buttons />
     </div>
 </nav>
 <script src="/navbar.js"></script>
