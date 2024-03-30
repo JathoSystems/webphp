@@ -39,7 +39,12 @@
             @endif
         @endauth
 
+        <br><br>
+        <h2>Delen</h2>
+        {!! QrCode::size(100)->generate(url()->current()) !!}
+
     </div>
+
 </body>
 
 </html>
