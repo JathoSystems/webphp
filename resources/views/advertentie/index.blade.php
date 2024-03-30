@@ -10,61 +10,80 @@
 
 <body>
     <x-navbar />
-
     <div class="container">
-
+    
+    @if(!$favorieten)
         <h1>Advertenties</h1>
+    @else
+        <h1>Favoriete advertenties</h1>
+    @endif
+    @if(!$favorieten)
         @auth
             @if (auth()->user()->canAdvertise())
                 <a class="button blue-button" href="{{ route('advertentie.create') }}">Advertentie toevoegen <i
                         class="fas fa-plus"></i></a>
             @endif
         @endauth
-
-        <table>
-            <thead>
+    @endif
+    <table>
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Omschrijving</th>
+                <th>Prijs</th>
+                <th>Foto</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($advertenties as $advertentie)
                 <tr>
-                    <th>Titel</th>
-                    <th>Omschrijving</th>
-                    <th>Prijs</th>
-                    <th>Foto</th>
-                    <th>Type</th>
-                    <th></th>
+                    <td>{{ $advertentie->title }}</td>
+                    <td>{{ $advertentie->description }}</td>
+                    <td>{{ $advertentie->price }}</td>
+                    @if ($favorieten)
+                        @php
+                            $img_src = "../storage/images/";
+                        @endphp
+                    @else
+                        @php
+                            $img_src = "storage/images/";
+                        @endphp
+                    @endif
+
+                    <td><img src="{{ asset($img_src . $advertentie->image_url) }}" alt="{{ $advertentie->titel }}" style="width: 100px;"></td>
+                    <td>
+                        @if ($advertentie->type === 'verhuur_advertentie')
+                            Verhuur advertentie
+                        @else
+                            Advertentie
+                        @endif
+                    </td>
+                    <td>
+
+                        @if(!$favorieten)
+                            <form action="{{ route('advertentie.edit', $advertentie) }}" method="get">
+                            @csrf
+                            <button type="submit">Bewerken</button>
+                            </form>
+                            <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit">Verwijderen</button>
+                            </form>
+                        @endif
+                        <form action="{{ route('advertentie.favorite', $advertentie) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="button">Favoriet</button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($advertenties as $advertentie)
-                    <tr>
-                        <td>{{ $advertentie->title }}</td>
-                        <td>{{ $advertentie->description }}</td>
-                        <td>{{ $advertentie->price }}</td>
-                        <td><img src="/storage/images/{{ $advertentie->image_url }}"
-                                alt
-                            ="{{ $advertentie->titel }}" style="width: 100px;"></td>
-                        <td>
-                            @if ($advertentie->type === 'verhuur_advertentie')
-                                Verhuur advertentie
-                            @else
-                                Advertentie
-                            @endif
-                        </td>
-                        <td class="buttons">
-                            @auth
-                                @if ($advertentie->user_id === auth()->id())
-                                    <a class="button blue-button"
-                                        href="{{ route('advertentie.edit', $advertentie) }}">Bewerken</a>
-                                    <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="button red-button" type="submit">Verwijderen</button>
-                                    </form>
-                                @endif
-                            @endauth
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
+
     </div>
 </body>
 
