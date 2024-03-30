@@ -104,16 +104,20 @@ nav {
     gap: 1rem;
 }
 
-.links a {
+.links a, .nav-item {
     color: var(--secondary-foreground-color);
     background-color: var(--secondary-color);
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease-in-out;
+    border: none;
+    line-height: 1.5rem;
+    font-size: 1.3rem;
+    cursor: pointer;
 }
 
-.links a:hover {
+.links a:hover, .nav-item:hover {
     background-color: var(--accent-color);
 }
 
@@ -261,8 +265,13 @@ input[type="submit"]:hover {
 .center {
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.gap {
+    gap: 1rem;
 }
 
 img {

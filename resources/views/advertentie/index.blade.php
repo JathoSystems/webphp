@@ -60,6 +60,8 @@
                                     </form>
                                 @endif
                             @endauth
+                            <a class="button blue-button"
+                                href="{{ route('advertentie.show', $advertentie) }}">Bekijken</a>
                         </td>
                     </tr>
                 @endforeach
