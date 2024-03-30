@@ -43,7 +43,12 @@
             <a class="button blue-button" href="{{ route('advertentie.index') }}">{{ __('Back') }}</a>
         </div>
 
+        <br><br>
+        <h2>Delen</h2>
+        {!! QrCode::size(100)->generate(url()->current()) !!}
+
     </div>
+
 </body>
 
 </html>
