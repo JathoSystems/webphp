@@ -263,6 +263,11 @@ input[type="submit"]:hover {
     background-color: var(--accent-color);
 }
 
+input[type="color"] {
+    padding: 0;
+    border: none;
+}
+
 .center {
     height: 100%;
     display: flex;
@@ -296,6 +301,14 @@ img {
     border-radius: 5px;
     width: 300px;
 
+}
+
+.card {
+    background-color: var(--secondary-color);
+    color: var(--secondary-foreground-color);
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 @media screen and (max-width: 1280px) {
