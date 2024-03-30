@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Advertentie;
+use Illuminate\Support\Facades\Validator;
+use League\Csv\Reader; //-- Gebruikt voor CSV uit te lezen
+
 
 class AdvertentieController extends Controller
 {
@@ -129,5 +132,63 @@ class AdvertentieController extends Controller
             'advertenties' => $advertenties,
             'favorieten' => $favorieten,
         ]);
+    }
+
+
+    public function importeren(){
+
+        return view('advertentie.import');
+    }
+
+    public function importAdvertenties(Request $request){
+
+
+        $validator = Validator::make($request->all(), [
+            'csv_file' => 'required|file|mimes:csv,txt|max:2048', // max 2MB
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        // Verkrijg het geüploade bestand
+        $uploadedFile = $request->file('csv_file');
+
+        // Open het CSV-bestand met behulp van de league/csv Reader
+        $reader = Reader::createFromPath($uploadedFile->getPathname(), 'r');
+        
+        // Stel de koppen in als kolomnamen
+        $reader->setHeaderOffset(0);
+        
+        // Lees alle records in het CSV-bestand
+        $records = $reader->getRecords();
+        // Loop door alle records en verwerk ze
+        foreach ($records as $record) {
+
+
+            
+            $values = explode(';', $record['Titel;Omschrijving;Prijs;Einddatum']);
+
+            $advertentie_obj = new Advertentie(); 
+            $advertentie_obj->title = $values[0];
+            $advertentie_obj->description = $values[1];
+            $advertentie_obj->price = $values[2];
+            $advertentie_obj->expiration_date = $values[3];
+
+            $advertentie = auth()->user()->advertenties()->create($advertentie_obj);
+            //-- Maak nieuwe advertentie aan.
+
+
+            // $record is een associatieve array waarbij de sleutels de kolomnamen zijn
+            // Verwerk hier elk record, bijvoorbeeld:
+            // $record['column_name']
+        }
+
+
+        dd();
+
     }
 }
