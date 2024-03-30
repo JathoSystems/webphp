@@ -154,41 +154,33 @@ class AdvertentieController extends Controller
         }
 
 
-        // Verkrijg het geüploade bestand
         $uploadedFile = $request->file('csv_file');
-
-        // Open het CSV-bestand met behulp van de league/csv Reader
         $reader = Reader::createFromPath($uploadedFile->getPathname(), 'r');
-        
-        // Stel de koppen in als kolomnamen
+        $reader->setDelimiter("\t"); // Stel de juiste scheidingsteken in
         $reader->setHeaderOffset(0);
-        
-        // Lees alle records in het CSV-bestand
         $records = $reader->getRecords();
-        // Loop door alle records en verwerk ze
+
         foreach ($records as $record) {
+            $values = explode(';', $record["Titel;Omschrijving;Prijs;Einddatum"]);
+            $date = \DateTime::createFromFormat('d-m-Y', $values[3]);
+            $formatted_date = $date->format('Y-m-d H:i:s');
 
-
-            
-            $values = explode(';', $record['Titel;Omschrijving;Prijs;Einddatum']);
+            $price = str_replace(',', '.', $values[2]);
 
             $advertentie_obj = new Advertentie(); 
             $advertentie_obj->title = $values[0];
             $advertentie_obj->description = $values[1];
-            $advertentie_obj->price = $values[2];
-            $advertentie_obj->expiration_date = $values[3];
+            $advertentie_obj->price = $price;
+            $advertentie_obj->expiration_date = $formatted_date;
+            $advertentie_obj->status = "beschikbaar";
+            $advertentie_obj->QR_code = "N/A";
+            $advertentie_obj->image_url = "N/A";
+            
+            $advertentie_array = $advertentie_obj->toArray();
 
-            $advertentie = auth()->user()->advertenties()->create($advertentie_obj);
-            //-- Maak nieuwe advertentie aan.
-
-
-            // $record is een associatieve array waarbij de sleutels de kolomnamen zijn
-            // Verwerk hier elk record, bijvoorbeeld:
-            // $record['column_name']
+            $advertentie = auth()->user()->advertenties()->create($advertentie_array);
         }
 
-
-        dd();
-
+        return redirect()->route('advertentie.index');
     }
 }
