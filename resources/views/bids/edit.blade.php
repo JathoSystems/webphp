@@ -11,7 +11,25 @@
 <body>
     <x-navbar />
 
+
     <div class="container center gap">
+        <div class="advertentie">
+            @isset($advertentie)
+                <h1>{{ $advertentie->title }}</h1>
+                <p>{{ $advertentie->description }}</p>
+                <p>{{ $advertentie->price }}</p>
+                <img src="/storage/images/{{ $advertentie->image_url }}" alt="{{ $advertentie->title }}">
+                <p>
+                    @if ($advertentie->type === 'verhuur_advertentie')
+                        {{ __('Rental ad') }}
+                    @else
+                        {{ __('Ad') }}
+                    @endif
+                </p>
+            @else
+                <p class="error">Geen advertentie gevonden</p>
+            @endisset
+        </div>
         <h1>Bieding aanpassen</h1>
         <form class="form" action="{{ route('bidding.update', $bidding) }}" method="post">
             @csrf
