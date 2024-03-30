@@ -5,6 +5,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdvertentieController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BiddingController;
+use App\Http\Controllers\BedrijfController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,5 +64,11 @@ Route::get('bidding/{bidding}', [BiddingController::class, 'show'])->middleware(
 Route::get('bidding/{bidding}/edit', [BiddingController::class, 'edit'])->middleware('auth')->name('bidding.edit');
 Route::put('bidding/{bidding}', [BiddingController::class, 'update'])->middleware('auth')->name('bidding.update');
 Route::delete('bidding/{bidding}', [BiddingController::class, 'destroy'])->middleware('auth')->name('bidding.destroy');
+
+Route::get('company/create', [BedrijfController::class, 'create'])->middleware('auth')->name('company.create');
+Route::post('company', [BedrijfController::class, 'store'])->middleware('auth')->name('company.store');
+Route::get('company/{company}/edit', [BedrijfController::class, 'edit'])->middleware('auth')->name('company.edit');
+Route::post('company/{company}', [BedrijfController::class, 'update'])->middleware('auth')->name('company.update');
+Route::get('company/{company}', [BedrijfController::class, 'show'])->middleware('auth')->name('company.show');
 
 require __DIR__.'/auth.php';

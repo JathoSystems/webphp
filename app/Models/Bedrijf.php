@@ -9,6 +9,8 @@ class Bedrijf extends Model
 {
     use HasFactory;
 
+    protected $table = 'bedrijven';
+
     protected $fillable = [
         'name',
         'user_id',

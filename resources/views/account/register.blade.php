@@ -10,7 +10,7 @@
     <x-navbar />
     <div class="container center gap">
         <h1>Register</h1>
-        <form class="form" action="{{ route('register') }}" method="post">
+        <form class="form" action="{{ route('account.register') }}" method="post">
             @csrf
             <label for="name">Name:</label>
             <input type="text" name="name" id="name" autocomplete="name">
