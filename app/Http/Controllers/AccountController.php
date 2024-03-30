@@ -29,4 +29,73 @@ class AccountController extends Controller
 
         return redirect()->route('account.roles');
     }
+
+    public function login()
+    {
+        return view('account.login');
+    }
+
+    public function authenticate(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (auth()->attempt($request->only('email', 'password'))) {
+            return redirect()->route('home');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    public function register()
+    {
+        return view('account.register');
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return redirect()->route('home');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = \App\Models\User::create($request->all());
+
+        auth()->login($user);
+
+        return redirect()->route('home');
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        $user = auth()->user();
+        $user->update($request->all());
+
+        return redirect()->route('account.roles');
+    }
+
+    public function destroy()
+    {
+        $user = auth()->user();
+        $user->delete();
+
+        return redirect()->route('home');
+    }
 }
