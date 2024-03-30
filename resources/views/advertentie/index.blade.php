@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Advertenties</title>
-    <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
+    <x-navbar />
+    <div class="container">
     
     @if(!$favorieten)
         <h1>Advertenties</h1>
@@ -15,7 +18,12 @@
         <h1>Favoriete advertenties</h1>
     @endif
     @if(!$favorieten)
-        <a class="button" href="{{ route('advertentie.create') }}">Advertentie toevoegen</a><br>
+        @auth
+            @if (auth()->user()->canAdvertise())
+                <a class="button blue-button" href="{{ route('advertentie.create') }}">Advertentie toevoegen <i
+                        class="fas fa-plus"></i></a>
+            @endif
+        @endauth
     @endif
     <table>
         <thead>
@@ -75,5 +83,8 @@
             @endforeach
         </tbody>
     </table>
+
+    </div>
 </body>
+
 </html>

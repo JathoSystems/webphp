@@ -63,4 +63,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Advertentie::class, 'favoriete_advertenties', 'user_id', 'advertentie_id')->withTimestamps();
     }
+  
+    public function canAdvertise()
+    {
+        $can = false;
+        foreach ($this->roles as $role) {
+            if ($role->name == 'particulier' || $role->name == 'zakelijk') {
+                $can = true;
+            }
+        }
+        return $can;
+    }
 }

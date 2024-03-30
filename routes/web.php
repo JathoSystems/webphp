@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdvertentieController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/welcome', function () {
+    return view('Welcome');
 });
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -44,5 +47,6 @@ Route::get('advertenties/{id}/edit', [AdvertentieController::class, 'edit'])->mi
 Route::delete('advertenties/{id}/delete', [AdvertentieController::class, 'destroy'])->middleware('auth')->name('advertentie.destroy');
 Route::put('advertenties/{id}', [AdvertentieController::class, 'update'])->middleware('auth')->name('advertentie.update');
 Route::put('advertenties/{advertentie}/favorite', [AdvertentieController::class, 'markFavorite'])->middleware('auth')->name('advertentie.favorite');
+Route::get('advertenties/{id}', [AdvertentieController::class, 'show'])->middleware('auth')->name('advertentie.show');
 
 require __DIR__.'/auth.php';
