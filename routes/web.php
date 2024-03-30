@@ -44,11 +44,13 @@ Route::post('/account/register', [AccountController::class, 'store'])->name('acc
 Route::post('/account/logout', [AccountController::class, 'logout'])->name('account.logout');
 
 Route::get('advertenties', [AdvertentieController::class, 'index'])->middleware('auth')->name('advertentie.index');
+Route::get('advertenties/favorieten', [AdvertentieController::class, 'favorieten'])->middleware('auth')->name('advertentie.favorieten');
 Route::get('advertenties/create', [AdvertentieController::class, 'create'])->middleware('auth')->name('advertentie.create');
 Route::post('advertenties', [AdvertentieController::class, 'store'])->middleware('auth')->name('advertentie.store');
 Route::get('advertenties/{id}/edit', [AdvertentieController::class, 'edit'])->middleware('auth')->name('advertentie.edit');
 Route::delete('advertenties/{id}/delete', [AdvertentieController::class, 'destroy'])->middleware('auth')->name('advertentie.destroy');
 Route::put('advertenties/{id}', [AdvertentieController::class, 'update'])->middleware('auth')->name('advertentie.update');
+Route::put('advertenties/{advertentie}/favorite', [AdvertentieController::class, 'markFavorite'])->middleware('auth')->name('advertentie.favorite');
 Route::get('advertenties/{id}', [AdvertentieController::class, 'show'])->middleware('auth')->name('advertentie.show');
 
 Route::get('bidding', [BiddingController::class, 'index'])->middleware('auth')->name('bidding.index');
