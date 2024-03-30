@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Advertentie</title>
+    <title>{{ __('Advertisement') }}</title>
 </head>
 
 <body>
@@ -16,12 +16,16 @@
         <h1>{{ $advertentie->title }}</h1>
         <p>{{ $advertentie->description }}</p>
         <p>{{ $advertentie->price }}</p>
-        <img src="/storage/images/{{ $advertentie->image_url }}" alt="{{ $advertentie->title }}">
+        @if ($advertentie->image_url === null)
+            {{ __('No image') }}
+        @else
+            <img src="/storage/images/{{ $advertentie->image_url }}" alt="{{ $advertentie->title }}">
+        @endif
         <p>
             @if ($advertentie->type === 'verhuur_advertentie')
-                {{ __('Rental ad') }}
+                {{ __('Rent advertisement') }}
             @else
-                {{ __('Ad') }}
+                {{ __('Purchase advertisement') }}
             @endif
         </p>
 
@@ -40,11 +44,11 @@
                         href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Place bid') }}</a>
                 @endif
             @endauth
-            <a class="button blue-button" href="{{ route('advertentie.index') }}">{{ __('Back') }}</a>
+            <a class="button blue-button" href="{{ route('advertentie.index') }}">{{ __('Back to overview') }}</a>
         </div>
 
         <br><br>
-        <h2>Delen</h2>
+        <h2>{{ __('Share') }}</h2>
         {!! QrCode::size(100)->generate(url()->current()) !!}
 
     </div>

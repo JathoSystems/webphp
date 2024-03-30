@@ -39,17 +39,19 @@ class AdvertentieController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'expiration_date' => 'required|date',
-            'image' => 'required|file|image|max:2048',
+            'image' => 'sometimes|file|image|max:2048',
         ]);
 
-        $date = now()->format('YmdHis');
+        if ($request->hasFile('image')) {
+            $date = now()->format('YmdHis');
+            
+            // change image filename to date and time
+            $request->file('image')->storeAs('public/images', $date . '.' . $request->file('image')->extension());
 
-        // change image filename to date and time
-        $request->file('image')->storeAs('public/images', $date . '.' . $request->file('image')->extension());
-
-        $request->merge([
-            'image_url' => $date . '.' . $request->file('image')->extension(),
-        ]);
+            $request->merge([
+                'image_url' => $date . '.' . $request->file('image')->extension(),
+            ]);
+        }
 
         $advertentie = auth()->user()->advertenties()->create($request->all());
 

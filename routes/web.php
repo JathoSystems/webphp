@@ -23,6 +23,7 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/setlocale/{locale}', [HomeController::class, 'setLocale'])->name('locale');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
