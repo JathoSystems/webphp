@@ -87,6 +87,6 @@ Route::get('company/{url}', [BedrijfController::class, 'showCustomUrl'])->middle
 Route::get('contracts', [ContractController::class, 'index'])->middleware('auth')->name('contract.index');
 Route::get('contracts/create', [ContractController::class, 'create'])->middleware('auth')->name('contracts.create');
 Route::post('contracts', [ContractController::class, 'store'])->middleware('auth')->name('contracts.store');
-
+Route::put('contracts/approve/{id}', [ContractController::class, 'approve'])->middleware('auth')->name('contracts.approve');
 
 require __DIR__.'/auth.php';
