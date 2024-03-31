@@ -33,6 +33,12 @@ Route::get('/advertenties', function () {
     return AdvertentieResource::collection(Advertentie::all());
 });
 
+Route::get('/advertenties/{bedrijf_id}', function (string $bedrijf_id) {
+    // Get user id from the bedrijf_id
+    $user_id = Bedrijf::findOrFail($bedrijf_id)->user_id;
+    return AdvertentieResource::collection(Advertentie::where('user_id', $user_id)->get());
+});
+
 Route::get('/bedrijf/{id}', function (string $id) {
     return new BedrijfResource(Bedrijf::findOrFail($id));
 });
