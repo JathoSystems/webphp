@@ -8,6 +8,7 @@ use App\Http\Controllers\BiddingController;
 use App\Http\Controllers\BedrijfController;
 use App\Http\Controllers\RentingController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\AdverteerderController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,19 +72,23 @@ Route::get('bidding/{bidding}/edit', [BiddingController::class, 'edit'])->middle
 Route::put('bidding/{bidding}', [BiddingController::class, 'update'])->middleware('auth')->name('bidding.update');
 Route::delete('bidding/{bidding}', [BiddingController::class, 'destroy'])->middleware('auth')->name('bidding.destroy');
 
-
 Route::get('renting', [RentingController::class, 'index'])->middleware('auth')->name('renting.index');
 Route::get('renting/create/{ad}', [RentingController::class, 'create'])->middleware('auth')->name('renting.create');
 Route::post('renting', [RentingController::class, 'store'])->middleware('auth')->name('renting.store');
-
-
-
 
 Route::get('company/create', [BedrijfController::class, 'create'])->middleware('auth')->name('company.create');
 Route::post('company', [BedrijfController::class, 'store'])->middleware('auth')->name('company.store');
 Route::get('company/{company}/edit', [BedrijfController::class, 'edit'])->middleware('auth')->name('company.edit');
 Route::post('company/{company}', [BedrijfController::class, 'update'])->middleware('auth')->name('company.update');
 Route::get('company/{url}', [BedrijfController::class, 'showCustomUrl'])->middleware('auth')->name('company.show');
+Route::get('company', [BedrijfController::class, 'index'])->middleware('auth')->name('company.index');
+
+Route::get('components/{company_id}', [ComponentController::class, 'index'])->middleware('auth')->name('component.index');
+Route::get('components/create/{company_id}', [ComponentController::class, 'create'])->middleware('auth')->name('component.create');
+Route::post('components', [ComponentController::class, 'store'])->middleware('auth')->name('component.store');
+Route::get('components/{component}/edit', [ComponentController::class, 'edit'])->middleware('auth')->name('component.edit');
+Route::put('components/{component}', [ComponentController::class, 'update'])->middleware('auth')->name('component.update');
+Route::delete('components/{component}', [ComponentController::class, 'destroy'])->middleware('auth')->name('component.destroy');
 
 Route::get('contracts', [ContractController::class, 'index'])->middleware('auth')->name('contract.index');
 Route::get('contracts/create', [ContractController::class, 'create'])->middleware('auth')->name('contracts.create');

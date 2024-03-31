@@ -63,7 +63,7 @@ class BedrijfController extends Controller
             'name' => 'required',
             'logo' => 'sometimes|image|file|max:2048',
             'color_scheme' => 'required',
-            'landing_page_url' => 'required|unique:bedrijven,landing_page_url',
+            'landing_page_url' => 'required|unique:bedrijven,landing_page_url,' . $id,
         ]);
         
         $company = \App\Models\Bedrijf::findOrFail($id);
@@ -90,17 +90,29 @@ class BedrijfController extends Controller
     {
         $company = \App\Models\Bedrijf::findOrFail($id);
 
+        $components = $company->components;
+
+        // Sort components by order
+        $components = $components->sortBy('order');
+
         return view('company.show', [
             'company' => $company,
+            'components' => $components,
         ]);
     }
 
     public function showCustomUrl($url)
     {
-     $company = \App\Models\Bedrijf::where('landing_page_url', $url)->first();
+        $company = \App\Models\Bedrijf::where('landing_page_url', $url)->first();
+
+        $components = $company->components;
+        
+        // Sort components by order
+        $components = $components->sortBy('order');
 
         return view('company.show', [
             'company' => $company,
+            'components' => $components,
         ]);
     }
 
