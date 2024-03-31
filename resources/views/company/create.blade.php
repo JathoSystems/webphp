@@ -37,9 +37,8 @@
             @enderror
 
             <label for="landing_page_url">{{ __('Landing page URL') }}</label>
-            <input type="text" name="landing_page_url">
-            {{ $base_url = config('app.url') }}
-            <i>{{ __('The custom landing page url will be: ').$base_url.__('/[Your input]') }}</i>
+            <input type="text" name="landing_page_url" value="{{ old('landing_page_url') }}">
+            <p>{{ __('The custom landing page url will be: ')}}<i>{{ explode('/%20', route('company.show', ['url' => ' ']))[0] . __('/[Your input]') }}</i></p>
             @error('landing_page_url')
                 <p>{{ $message }}</p>
             @enderror
