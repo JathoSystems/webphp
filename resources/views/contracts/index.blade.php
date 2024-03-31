@@ -11,7 +11,9 @@
 
         <h1>{{ __('Uploaded contracts') }}</h1>
 
-        <a class="button blue-button" href="{{ route('contracts.create') }}">{{ __('Add contract') }} <i class="fas fa-plus"></i></a>
+        @if(auth()->user()->hasRole('admin'))
+            <a class="button blue-button" href="{{ route('contracts.create') }}">{{ __('Add contract') }} <i class="fas fa-plus"></i></a>
+        @endif
         <br><br>
         <table>
             <thead>
