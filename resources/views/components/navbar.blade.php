@@ -15,6 +15,9 @@
         @if(auth()->check() && auth()->user()->hasRole('admin'))
             <a href="/contracts">{{ __("Contracts") }}</a>
         @endif
+        @if(auth()->check() && auth()->user()->hasRole('zakelijk'))
+            <a href="/contracts">{{ __("Contracts") }}</a>
+        @endif
         <x-navbar-account-buttons />
     </div>
 </nav>

@@ -93,7 +93,7 @@ class User extends Authenticatable
 
         foreach ($this->roles as $role) {
 
-            if ($role->name == 'admin') {
+            if ($role->name == $roleName) {
 
                 $hasRole = true;
 
