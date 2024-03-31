@@ -39,6 +39,11 @@ class BedrijfController extends Controller
 
         $company = auth()->user()->company()->create($request->all());
 
+        // Set the bedrijf_id in the user table
+        auth()->user()->update([
+            'bedrijf_id' => $company->id,
+        ]);
+
         return redirect()->route('company.show', $company);
     }
 
