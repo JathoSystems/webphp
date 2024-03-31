@@ -36,9 +36,16 @@
                 <p>{{ $message }}</p>
             @enderror
 
+            <label for="landing_page_url">{{ __('Landing page URL') }}</label>
+            <input type="text" name="landing_page_url">
+            {{ $base_url = config('app.url') }}
+            <i>{{ __('The custom landing page url will be: ').$base_url.__('/[Your input]') }}</i>
+            @error('landing_page_url')
+                <p>{{ $message }}</p>
+            @enderror
+
             {{-- Hidden fields for user id and landing page url --}}
             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-            <input type="hidden" name="landing_page_url" value="/">
 
             @error('user_id')
                 <p>{{ $message }}</p>
