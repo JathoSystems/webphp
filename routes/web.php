@@ -82,7 +82,7 @@ Route::get('company/create', [BedrijfController::class, 'create'])->middleware('
 Route::post('company', [BedrijfController::class, 'store'])->middleware('auth')->name('company.store');
 Route::get('company/{company}/edit', [BedrijfController::class, 'edit'])->middleware('auth')->name('company.edit');
 Route::post('company/{company}', [BedrijfController::class, 'update'])->middleware('auth')->name('company.update');
-Route::get('company/{company}', [BedrijfController::class, 'show'])->middleware('auth')->name('company.show');
+Route::get('company/{url}', [BedrijfController::class, 'showCustomUrl'])->middleware('auth')->name('company.show');
 
 Route::get('contracts', [ContractController::class, 'index'])->middleware('auth')->name('contract.index');
 Route::get('contracts/create', [ContractController::class, 'create'])->middleware('auth')->name('contracts.create');

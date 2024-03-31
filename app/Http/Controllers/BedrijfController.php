@@ -24,6 +24,7 @@ class BedrijfController extends Controller
             'name' => 'required',
             'logo' => 'required|file|image|max:2048',
             'color_scheme' => 'required',
+            'landing_page_url' => 'required|unique:bedrijven,landing_page_url',
         ]);
 
         $date = now()->format('YmdHis');
@@ -39,7 +40,12 @@ class BedrijfController extends Controller
 
         $company = auth()->user()->company()->create($request->all());
 
-        return redirect()->route('company.show', $company);
+        // Set the bedrijf_id in the user table
+        auth()->user()->update([
+            'bedrijf_id' => $company->id,
+        ]);
+
+        return redirect()->route('company.show', $company->landing_page_url);
     }
 
     public function edit($id)
@@ -57,6 +63,7 @@ class BedrijfController extends Controller
             'name' => 'required',
             'logo' => 'sometimes|image|file|max:2048',
             'color_scheme' => 'required',
+            'landing_page_url' => 'required|unique:bedrijven,landing_page_url',
         ]);
         
         $company = \App\Models\Bedrijf::findOrFail($id);
@@ -76,12 +83,21 @@ class BedrijfController extends Controller
 
         $company->update($request->all());
 
-        return redirect()->route('company.show', $company);
+        return redirect()->route('company.show', $company->landing_page_url);
     }
 
     public function show($id)
     {
         $company = \App\Models\Bedrijf::findOrFail($id);
+
+        return view('company.show', [
+            'company' => $company,
+        ]);
+    }
+
+    public function showCustomUrl($url)
+    {
+     $company = \App\Models\Bedrijf::where('landing_page_url', $url)->first();
 
         return view('company.show', [
             'company' => $company,
