@@ -63,7 +63,7 @@ class BedrijfController extends Controller
             'name' => 'required',
             'logo' => 'sometimes|image|file|max:2048',
             'color_scheme' => 'required',
-            'landing_page_url' => 'required|unique:bedrijven,landing_page_url',
+            'landing_page_url' => 'required|unique:bedrijven,landing_page_url,' . $id,
         ]);
         
         $company = \App\Models\Bedrijf::findOrFail($id);
