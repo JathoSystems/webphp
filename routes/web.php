@@ -55,6 +55,9 @@ Route::delete('advertenties/{id}/delete', [AdvertentieController::class, 'destro
 Route::put('advertenties/{id}', [AdvertentieController::class, 'update'])->middleware('auth')->name('advertentie.update');
 Route::put('advertenties/{advertentie}/favorite', [AdvertentieController::class, 'markFavorite'])->middleware('auth')->name('advertentie.favorite');
 Route::get('advertenties/{id}', [AdvertentieController::class, 'show'])->middleware('auth')->name('advertentie.show');
+Route::get('advertenties/{id}/review', [AdvertentieController::class, 'review'])->middleware('auth')->name('advertentie.review');
+Route::post('advertenties/{id}/review', [AdvertentieController::class, 'addReview'])->middleware('auth')->name('advertentie.addReview');
+
 Route::get('importeren', [AdvertentieController::class, 'importeren'])->middleware('auth')->name('advertentie.importeren');
 Route::post('importAdvertenties', [AdvertentieController::class, 'importAdvertenties'])->middleware('auth')->name('advertentie.importAdvertenties');
 
