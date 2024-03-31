@@ -9,6 +9,7 @@ use App\Http\Controllers\BedrijfController;
 use App\Http\Controllers\RentingController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\AdverteerderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,6 +93,12 @@ Route::delete('components/{component}', [ComponentController::class, 'destroy'])
 Route::get('contracts', [ContractController::class, 'index'])->middleware('auth')->name('contract.index');
 Route::get('contracts/create', [ContractController::class, 'create'])->middleware('auth')->name('contracts.create');
 Route::post('contracts', [ContractController::class, 'store'])->middleware('auth')->name('contracts.store');
+Route::put('contracts/approve/{id}', [ContractController::class, 'approve'])->middleware('auth')->name('contracts.approve');
+
+Route::get('advertisers', [AdverteerderController::class, 'index'])->middleware('auth')->name('advertisers.index');
+Route::get('advertisers/{advertiser}', [AdverteerderController::class, 'show'])->middleware('auth')->name('advertisers.show');
+Route::get('advertisers/{id}/review', [AdverteerderController::class, 'review'])->middleware('auth')->name('advertisers.review');
+Route::post('advertisers/{id}/review', [AdverteerderController::class, 'addReview'])->middleware('auth')->name('advertisers.addReview');
 
 
 require __DIR__.'/auth.php';

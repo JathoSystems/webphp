@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
 use App\Models\Advertentie;
 use App\Models\Bedrijf;
+use App\Models\Review;
+
 
 class User extends Authenticatable
 {
@@ -93,12 +95,16 @@ class User extends Authenticatable
 
         foreach ($this->roles as $role) {
 
-            if ($role->name == 'admin') {
+            if ($role->name == $roleName) {
 
                 $hasRole = true;
 
             }
         }
         return $hasRole;
+    }
+
+    public function reviews() {
+        return $this->hasMany(Review::class);
     }
 }

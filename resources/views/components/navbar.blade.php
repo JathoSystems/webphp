@@ -13,8 +13,11 @@
         <a href="/bidding">{{ __("Bids") }}</a>
         <a href="/renting">{{ __("Rentings") }}</a>
         <a href="/company">{{ __("Companies") }}</a>
-        @if(auth()->check() && auth()->user()->hasRole('admin'))
+        @if(auth()->check() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('zakelijk')))
             <a href="/contracts">{{ __("Contracts") }}</a>
+        @endif
+        @if(auth()->check())
+            <a href="/advertisers">{{ __("Advertisers") }}</a>
         @endif
         <x-navbar-account-buttons />
     </div>

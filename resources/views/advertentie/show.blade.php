@@ -67,14 +67,15 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>{{ __('User') }}</th>
                             <th>{{ __('Remarks') }}</th>
                             <th>{{ __('Date created') }}</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($reviews as $review)
                             <tr>
+                                <td>{{ $review->user->name }}</td>
                                 <td>{{ $review->remarks }}</td>
                                 <td>{{ $review->created_at }}</td>
                             </tr>

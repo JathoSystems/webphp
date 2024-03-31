@@ -25,6 +25,7 @@
                 @endif
             @endauth
         @endif
+        <br><br>
         <table>
             <thead>
                 <tr>
