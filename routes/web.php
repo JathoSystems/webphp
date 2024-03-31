@@ -51,6 +51,7 @@ Route::post('/account/logout', [AccountController::class, 'logout'])->name('acco
 
 Route::get('advertenties', [AdvertentieController::class, 'index'])->middleware('auth')->name('advertentie.index');
 Route::get('advertenties/favorieten', [AdvertentieController::class, 'favorieten'])->middleware('auth')->name('advertentie.favorieten');
+Route::get('advertenties/personal', [AdvertentieController::class, 'personal'])->middleware('auth')->name('advertentie.personal');
 Route::get('advertenties/create', [AdvertentieController::class, 'create'])->middleware('auth')->name('advertentie.create');
 Route::post('advertenties', [AdvertentieController::class, 'store'])->middleware('auth')->name('advertentie.store');
 Route::get('advertenties/{id}/edit', [AdvertentieController::class, 'edit'])->middleware('auth')->name('advertentie.edit');
@@ -60,6 +61,7 @@ Route::put('advertenties/{advertentie}/favorite', [AdvertentieController::class,
 Route::get('advertenties/{id}', [AdvertentieController::class, 'show'])->middleware('auth')->name('advertentie.show');
 Route::get('advertenties/{id}/review', [AdvertentieController::class, 'review'])->middleware('auth')->name('advertentie.review');
 Route::post('advertenties/{id}/review', [AdvertentieController::class, 'addReview'])->middleware('auth')->name('advertentie.addReview');
+
 
 Route::get('importeren', [AdvertentieController::class, 'importeren'])->middleware('auth')->name('advertentie.importeren');
 Route::post('importAdvertenties', [AdvertentieController::class, 'importAdvertenties'])->middleware('auth')->name('advertentie.importAdvertenties');

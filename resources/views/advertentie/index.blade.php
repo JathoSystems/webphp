@@ -12,10 +12,25 @@
     <x-navbar />
     <div class="container">
 
-        @if (!$favorieten)
-            <h1>{{ __('Advertisements') }}</h1>
-        @else
+        @if ($favorieten)
             <h1>{{ __('Favorite adverisements') }}</h1>
+
+            <a class="button blue-button" href="{{ route('advertentie.index') }}">{{ __('Show all advertisement') }}</a>
+            @if(auth()->user()->canAdvertise())
+            <a class="button blue-button" href="{{ route('advertentie.personal') }}">{{ __('Show personal advertisement') }}</a>
+            @endif
+            
+        @elseif($own_ads)
+            <h1>{{ __('Your advertisements') }}</h1>
+            <a class="button blue-button" href="{{ route('advertentie.index') }}">{{ __('Show all advertisement') }}</a>
+            <a class="button blue-button" href="{{ route('advertentie.favorieten') }}">{{ __('Show personal advertisement') }}</a>
+        @else 
+            <h1>{{ __('Advertisements') }}</h1>
+            <a class="button blue-button" href="{{ route('advertentie.favorieten') }}">{{ __('Show favorite advertisements') }}</a>
+            @if(auth()->user()->canAdvertise())
+            <a class="button blue-button" href="{{ route('advertentie.personal') }}">{{ __('Show personal advertisement') }}</a>
+            @endif
+
         @endif
         @if (!$favorieten)
             @auth
