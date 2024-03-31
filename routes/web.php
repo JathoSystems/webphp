@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BiddingController;
 use App\Http\Controllers\BedrijfController;
 use App\Http\Controllers\RentingController;
+use App\Http\Controllers\ContractController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,5 +83,10 @@ Route::post('company', [BedrijfController::class, 'store'])->middleware('auth')-
 Route::get('company/{company}/edit', [BedrijfController::class, 'edit'])->middleware('auth')->name('company.edit');
 Route::post('company/{company}', [BedrijfController::class, 'update'])->middleware('auth')->name('company.update');
 Route::get('company/{company}', [BedrijfController::class, 'show'])->middleware('auth')->name('company.show');
+
+Route::get('contracts', [ContractController::class, 'index'])->middleware('auth')->name('contract.index');
+Route::get('contracts/create', [ContractController::class, 'create'])->middleware('auth')->name('contracts.create');
+Route::post('contracts', [ContractController::class, 'store'])->middleware('auth')->name('contracts.store');
+
 
 require __DIR__.'/auth.php';

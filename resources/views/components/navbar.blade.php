@@ -12,7 +12,7 @@
         <a href="/advertenties">{{ __("Advertisements") }}</a>
         <a href="/bidding">{{ __("Bids") }}</a>
         <a href="/renting">{{ __("Rentings") }}</a>
-        @if(auth()->user()->hasRole('admin'))
+        @if(auth()->check() && auth()->user()->hasRole('admin'))
             <a href="/contracts">{{ __("Contracts") }}</a>
         @endif
         <x-navbar-account-buttons />
