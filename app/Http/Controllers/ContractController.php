@@ -36,10 +36,12 @@ class ContractController extends Controller
         $full_key = $default_prefix . $company_key;
         $customPdfPath = public_path($full_key);
 
+        $company = Bedrijf::find($request->company);
+
         //-- Maak PDF aan en sla die op.
-        Pdf::view('contracts.template')
+        $pdf = PDF::view('contracts.template', ['company' => $company])
             ->format('a4')
-            ->save($customPdfPath);        
+            ->save($customPdfPath);   
 
         Contract::create([
             'bedrijf_id' => $request->company,
