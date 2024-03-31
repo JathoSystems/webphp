@@ -16,7 +16,9 @@ class RentingController extends Controller
     {
 
         $hired_by_others = false;
-        $personalRentals = Renting::where('user_id', auth()->user()->id)->get();
+        $personalRentals = Renting::where('user_id', auth()->user()->id)
+            ->orderBy('date_from', 'asc')
+            ->get();
 
         return view('renting.index', [
             'rentingArticles' => $personalRentals,
