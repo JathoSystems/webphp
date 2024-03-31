@@ -92,6 +92,9 @@ class BedrijfController extends Controller
 
         $components = $company->components;
 
+        // Sort components by order
+        $components = $components->sortBy('order');
+
         return view('company.show', [
             'company' => $company,
             'components' => $components,
@@ -103,6 +106,9 @@ class BedrijfController extends Controller
         $company = \App\Models\Bedrijf::where('landing_page_url', $url)->first();
 
         $components = $company->components;
+        
+        // Sort components by order
+        $components = $components->sortBy('order');
 
         return view('company.show', [
             'company' => $company,
