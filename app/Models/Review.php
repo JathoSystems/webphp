@@ -12,7 +12,8 @@ class Review extends Model
 
     protected $fillable = [
         'user_id',
-        'advertentie_id', 
+        'advertentie_id',
+        'advertiser_id', 
         'remarks',
     ];
 
