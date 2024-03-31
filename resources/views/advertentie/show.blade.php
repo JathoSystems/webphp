@@ -62,7 +62,7 @@
 
         <br><br>
         @auth
-            @if ($advertentie->user_id !== auth()->id() && $advertentie->type == "verhuur_advertentie")
+            @if ($advertentie->type == "verhuur_advertentie")
                 <h2>Reviews</h2>
                 <table>
                     <thead>
