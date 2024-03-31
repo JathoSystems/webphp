@@ -8,16 +8,45 @@
 <body>
 <x-navbar />
     <div class="container">
-        <h1>{{__("Your rented articles")}}</h1>
-        <ul>
-            @foreach ($rentingArticles as $ra)
-                <li>
-                    <strong>{{ $ra->user->name }}</strong> {{__("rented article")}} {{__("from")}} {{ date('d-m-Y', strtotime($ra->date_from)) }} {{__("to")}} {{ date('d-m-Y', strtotime($ra->date_to)) }}
-                    <strong>{{ $ra->ad->title }}</strong>
-                    <!-- <a href="{{ route('bidding.show', $ra) }}">{{ __('View') }}</a>-->
-                </li>
-            @endforeach
-        </ul>
+        @if (!$hired_by_others)
+            <h1>{{__("Your personal rented articles")}}</h1>
+        @else
+            <h1>{{__("Your rented articles")}}</h1>
+        @endif
+        
+        @if ((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && !$hired_by_others)
+            <a class="button blue-button" href="{{ route('renting.personal')}}">{{ __('Rented advertisements') }}</a>
+        @elseif((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && $hired_by_others)
+            <a class="button blue-button" href="{{ route('renting.index')}}">{{ __('My personal rentals') }}</a>
+        @endif
+        <br><br>
+        <table>
+            <thead>
+                <tr>
+                    @if ((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && $hired_by_others)
+                        <th>{{ __('Hired by') }}</th>
+                    @endif
+                    <th>{{ __('Item') }}</th>
+                    <th>{{ __('Price') }}</th>
+                    <th>{{ __('Date from') }}</th>
+                    <th>{{ __('Date to') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($rentingArticles as $ra)
+                    <tr>
+                        @if ((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && $hired_by_others)
+                            <td>{{ $ra->user->name }}</td>
+                        @endif
+                        <td>{{ $ra->ad->title }}</td>
+                        <td>{{ $ra->ad->price }}</td>
+                        <td>{{ date('d-m-Y', strtotime($ra->date_from)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($ra->date_to)) }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
 </body>
 </html>

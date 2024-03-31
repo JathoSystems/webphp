@@ -14,8 +14,13 @@ class RentingController extends Controller
 {
     public function index()
     {
+
+        $hired_by_others = false;
+        $personalRentals = Renting::where('user_id', auth()->user()->id)->get();
+
         return view('renting.index', [
-            'rentingArticles' => Renting::all(),
+            'rentingArticles' => $personalRentals,
+            'hired_by_others' => $hired_by_others,
         ]);
     }
 
@@ -108,5 +113,26 @@ class RentingController extends Controller
             }
         }
         return null;
+    }
+
+    public function personal(){
+
+        $hired_by_others = true;
+        $all_rentals = Renting::all();
+        $personalRentals = [];
+
+        //-- Haal hier alle verhuur advertenties van artikelen die op jouw naam staan.
+        foreach($all_rentals as $ar){
+
+            $advertentie = Advertentie::findOrFail($ar->ad_id);
+            if($advertentie->user_id === auth()->id()){
+                $personalRentals[]  = $ar;
+            }
+        }
+
+        return view('renting.index', [
+            'rentingArticles' => $personalRentals,
+            'hired_by_others' => $hired_by_others,
+        ]);
     }
 }

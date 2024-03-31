@@ -75,6 +75,8 @@ Route::delete('bidding/{bidding}', [BiddingController::class, 'destroy'])->middl
 Route::get('renting', [RentingController::class, 'index'])->middleware('auth')->name('renting.index');
 Route::get('renting/create/{ad}', [RentingController::class, 'create'])->middleware('auth')->name('renting.create');
 Route::post('renting', [RentingController::class, 'store'])->middleware('auth')->name('renting.store');
+Route::get('renting/rentedOut', [RentingController::class, 'personal'])->middleware('auth')->name('renting.personal');
+
 
 Route::get('company/create', [BedrijfController::class, 'create'])->middleware('auth')->name('company.create');
 Route::post('company', [BedrijfController::class, 'store'])->middleware('auth')->name('company.store');
