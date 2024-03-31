@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class landing.text extends Component
+class landing-image extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class landing.text extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.landing.text');
+        return view('components.landing.image');
     }
 }

@@ -90,17 +90,23 @@ class BedrijfController extends Controller
     {
         $company = \App\Models\Bedrijf::findOrFail($id);
 
+        $components = $company->components;
+
         return view('company.show', [
             'company' => $company,
+            'components' => $components,
         ]);
     }
 
     public function showCustomUrl($url)
     {
-     $company = \App\Models\Bedrijf::where('landing_page_url', $url)->first();
+        $company = \App\Models\Bedrijf::where('landing_page_url', $url)->first();
+
+        $components = $company->components;
 
         return view('company.show', [
             'company' => $company,
+            'components' => $components,
         ]);
     }
 

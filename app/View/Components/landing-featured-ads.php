@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class landing.featured-ads extends Component
+class landing-featured-ads extends Component
 {
     /**
      * Create a new component instance.

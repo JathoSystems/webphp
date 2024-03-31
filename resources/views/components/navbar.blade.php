@@ -12,6 +12,7 @@
         <a href="/advertenties">{{ __("Advertisements") }}</a>
         <a href="/bidding">{{ __("Bids") }}</a>
         <a href="/renting">{{ __("Rentings") }}</a>
+        <a href="/company">{{ __("Companies") }}</a>
         @if(auth()->check() && auth()->user()->hasRole('admin'))
             <a href="/contracts">{{ __("Contracts") }}</a>
         @endif
