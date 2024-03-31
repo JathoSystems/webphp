@@ -33,6 +33,7 @@
                     <th>{{ __('Price') }}</th>
                     <th>{{ __('Image') }}</th>
                     <th>{{ __('Type') }}</th>
+                    <th>{{ __('Expiration date') }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -67,6 +68,7 @@
                                 {{ __('Purchase advertisement') }}
                             @endif
                         </td>
+                        <td>{{ $advertentie->expiration_date }}</td>
                         <td>
                             <div class="buttons">
                                 @if (!$favorieten && $advertentie->user_id === auth()->id())

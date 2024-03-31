@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Advertentie;
+use App\Models\Review;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use League\Csv\Reader; //-- Gebruikt voor CSV uit te lezen
@@ -25,9 +26,11 @@ class AdvertentieController extends Controller
     public function show($id) // Details van een advertentie
     {
         $advertentie = Advertentie::findOrFail($id);
+        $reviews = Review::where('advertentie_id', $id)->get();
 
         return view('advertentie.show', [
             'advertentie' => $advertentie,
+            'reviews' => $reviews,
         ]);
     }
 
@@ -185,5 +188,27 @@ class AdvertentieController extends Controller
         }
 
         return redirect()->route('advertentie.index');
+    }
+
+    public function review($id){
+        $advertentie = Advertentie::findOrFail($id); 
+        return view('advertentie.review', [
+            'advertentie' => $advertentie,
+        ]);
+    }
+
+    public function addReview(Request $request){
+
+        $advertentie = Advertentie::findOrFail($request->ad_id);
+
+        $newReview = new Review();
+        $newReview->user_id = $request->user_id;
+        $newReview->advertentie_id = $request->ad_id;
+        $newReview->remarks = $request->remarks;
+        $newReview->save();
+    
+        $advertentie->reviews()->save($newReview);
+    
+        return redirect()->route('advertentie.show', $advertentie->id);
     }
 }

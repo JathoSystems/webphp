@@ -81,4 +81,24 @@ class User extends Authenticatable
         }
         return $can;
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole($roleName)
+    {
+        $hasRole = false;
+
+        foreach ($this->roles as $role) {
+
+            if ($role->name == 'admin') {
+
+                $hasRole = true;
+
+            }
+        }
+        return $hasRole;
+    }
 }
