@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Advertentie;
 use App\Models\Bidding;
 use App\Models\Renting;
@@ -20,13 +21,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         // Add roles
         \App\Models\Role::factory()->create([
             'name' => 'particulier',
@@ -64,11 +58,21 @@ class DatabaseSeeder extends Seeder
         //-- Contracten
         Contract::factory(5)->create();
 
-         //-- Valid user
-         \App\Models\User::factory()->create([
+        //-- Valid admin user
+        $admin  = \App\Models\User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@dev.com',
             'password' => Hash::make("!Ab12345"),
         ]);
+
+        $admin->roles()->attach(Role::where('name', 'admin')->first());
+
+        //-- Valid default user (buyer)
+        \App\Models\User::factory()->create([
+            'name' => 'buyer',
+            'email' => 'buyer@dev.com',
+            'password' => Hash::make("!Ab12345"),
+        ]);
+
     }
 }
