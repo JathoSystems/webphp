@@ -40,7 +40,6 @@
                         <button class="button red-button" type="submit">{{ __('Delete') }}</button>
                     </form>
                 @else
-
                     @if($advertentie->type == "verhuur_advertentie")
                     <a class="button blue-button"
                         href="{{ route('renting.create', ['ad' => $advertentie->id]) }}">{{ __('Hire item') }}</a>
@@ -51,8 +50,10 @@
                         href="{{ route('advertentie.review', ['id' => $advertentie->id]) }}">{{ __('Place review') }}</a>
                     <br>
                     @else
-                    <a class="button blue-button"
-                        href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Place bid') }}</a>
+                        @if($advertentie->expiration_date > now()) 
+                        <a class="button blue-button"
+                            href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Place bid') }}</a>
+                        @endif
                     @endif
                     
                 @endif

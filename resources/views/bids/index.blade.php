@@ -32,6 +32,7 @@
                     <th>{{ __('Item') }}</th>
                     <th>{{ __('Price') }}</th>
                     <th>{{ __('Bid added on') }}</th>
+                    <th>{{ __('Advertisement expires on') }}</th>
                     <th>{{ __('Highest bid') }}</th>
                 </tr>
             </thead>
@@ -43,7 +44,8 @@
                         @endif
                         <td>{{ $bid->ad->title }}</td>
                         <td>{{ $bid->price }}</td>
-                        <td>{{ $bid->created_at }}</td>
+                        <td>{{ $bid->created_at->format('d-m-Y H:i') }}</td>
+                        <td>{{ $bid->ad->expiration_date->format('d-m-Y H:i') }}</td>
                         <td>
                         @if($bid->isHighestBid($bid->ad_id, $bid->price) == 1)
                             {{ __('Yes') }}
