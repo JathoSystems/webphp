@@ -9,6 +9,9 @@ use App\Models\Review;
 
 class AdverteerderController extends Controller
 {
+
+    private $amountItemsPerPage = 5;
+
     /**
      * Display a listing of the resource.
      */
@@ -102,15 +105,12 @@ class AdverteerderController extends Controller
     
 
     private function getAdvertisers(){
-        $all_users = User::all();
-        $advertisers = [];
-
-        foreach($all_users as $user) {
-            if ($user->hasRole("zakelijk") || $user->hasRole("particulier")) {
-                $advertisers[] = $user;
-            }
-        }
-
-        return $advertisers;
+        $all_users = User::query();
+    
+        $all_users->whereHas('roles', function($query) {
+            $query->where('name', 'zakelijk')->orWhere('name', 'particulier');
+        });
+    
+        return $all_users->paginate($this->amountItemsPerPage);
     }
 }

@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{__("Contracts")}}</title>
+    <style>
+        svg{
+            height:20px;
+        }
+    </style>
 </head>
 <body>
     <x-navbar />
@@ -56,6 +61,9 @@
                 @endforeach
             </tbody>
         </table>
+
+        <br><br>
+        {{$contracts->links()}}
     </div>
 </body>
 </html>

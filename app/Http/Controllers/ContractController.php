@@ -9,18 +9,20 @@ use Spatie\LaravelPdf\Facades\Pdf;
 
 class ContractController extends Controller
 {
+
+    private $amountItemsPerPage = 5;
+
     public function index()
     {
 
-
         $contracts = [];
         if(auth()->user()->hasRole("admin")){
-            $contracts = Contract::all();
+            $contracts = Contract::paginate($this->amountItemsPerPage);
         } else{
             //-- User called page with zakelijke user
             $company = Bedrijf::where('user_id', auth()->user()->id)->first();
             $contracts = Contract::where('bedrijf_id', $company->id)
-            ->get();
+            ->paginate($this->amountItemsPerPage);
         }
 
         return view('contracts.index', [
