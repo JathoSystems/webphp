@@ -10,6 +10,7 @@ use App\Http\Controllers\RentingController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\AdverteerderController;
+use App\Http\Controllers\RelatedAdsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,6 +63,9 @@ Route::get('advertenties/{id}', [AdvertentieController::class, 'show'])->middlew
 Route::get('advertenties/{id}/review', [AdvertentieController::class, 'review'])->middleware('auth')->name('advertentie.review');
 Route::post('advertenties/{id}/review', [AdvertentieController::class, 'addReview'])->middleware('auth')->name('advertentie.addReview');
 
+Route::get('advertenties/{id}/related', [RelatedAdsController::class, 'create'])->middleware('auth')->name('advertentie.createRelated');
+Route::post('advertenties/related', [RelatedAdsController::class, 'store'])->middleware('auth')->name('advertentie.storeRelated');
+Route::delete('advertenties/{id}/related/{related_advertentie_id}', [RelatedAdsController::class, 'destroy'])->middleware('auth')->name('advertentie.destroyRelated');
 
 Route::get('importeren', [AdvertentieController::class, 'importeren'])->middleware('auth')->name('advertentie.importeren');
 Route::post('importAdvertenties', [AdvertentieController::class, 'importAdvertenties'])->middleware('auth')->name('advertentie.importAdvertenties');

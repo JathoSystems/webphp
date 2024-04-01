@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Advertentie extends Model
 {
     use HasFactory;
@@ -30,6 +31,10 @@ class Advertentie extends Model
 
     public function reviews() {
         return $this->hasMany(Review::class);
+    }
+
+    public function related_advertenties() {
+        return $this->hasMany(RelatedAdvertentie::class, 'advertentie_id', 'id');
     }
 
     protected $casts = [
