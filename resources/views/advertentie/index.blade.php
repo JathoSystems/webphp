@@ -37,6 +37,7 @@
                 @if (auth()->user()->canAdvertise())
                     <a class="button blue-button" href="{{ route('advertentie.create') }}">{{ __('Add advertisement') }} <i
                             class="fas fa-plus"></i></a>
+                    <a class="button blue-button" href="{{ route('advertentie.importeren') }}">{{ __("Import advertisements") }}</a>
                 @endif
             @endauth
         @endif
@@ -58,7 +59,7 @@
                     <tr>
                         <td>{{ $advertentie->title }}</td>
                         <td>{{ $advertentie->description }}</td>
-                        <td>{{ $advertentie->price }}</td>
+                        <td>€{{ $advertentie->price }}</td>
                         @if ($favorieten)
                             @php
                                 $img_src = '../storage/images/';
