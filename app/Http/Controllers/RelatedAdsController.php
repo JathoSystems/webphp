@@ -37,8 +37,7 @@ class RelatedAdsController extends Controller
     public function destroy($id, $related_advertentie_id)
     {
         $advertentie = Advertentie::find($id);
-        $related_advertentie = Advertentie::find($related_advertentie_id);
-        $advertentie->related_advertenties()->detach($related_advertentie);
+        $advertentie->related_advertenties()->where('related_advertentie_id', $related_advertentie_id)->delete();
         return redirect()->route('advertentie.show', $advertentie->id);
     }
 }

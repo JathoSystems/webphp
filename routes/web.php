@@ -65,6 +65,7 @@ Route::post('advertenties/{id}/review', [AdvertentieController::class, 'addRevie
 
 Route::get('advertenties/{id}/related', [RelatedAdsController::class, 'create'])->middleware('auth')->name('advertentie.createRelated');
 Route::post('advertenties/related', [RelatedAdsController::class, 'store'])->middleware('auth')->name('advertentie.storeRelated');
+Route::delete('advertenties/{id}/related/{related_advertentie_id}', [RelatedAdsController::class, 'destroy'])->middleware('auth')->name('advertentie.destroyRelated');
 
 Route::get('importeren', [AdvertentieController::class, 'importeren'])->middleware('auth')->name('advertentie.importeren');
 Route::post('importAdvertenties', [AdvertentieController::class, 'importAdvertenties'])->middleware('auth')->name('advertentie.importAdvertenties');

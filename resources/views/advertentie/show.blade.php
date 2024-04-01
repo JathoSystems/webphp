@@ -89,7 +89,7 @@
 
         <h2>{{ __('Related advertisements') }}</h2>
         <div class="ads">
-            @isset($related_advertenties)
+            @if($related_advertenties->count() > 0)
                 @foreach ($related_advertenties as $related_advertentie)
                     <div class="ad">
                         <h3>{{ $related_advertentie->title }}</h3>
@@ -112,7 +112,10 @@
                             href="{{ route('advertentie.show', $related_advertentie->id) }}">{{ __('View') }}</a>
                         @auth
                             @if ($advertentie->user_id === auth()->id())
-                                <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
+                                <form action="{{ route('advertentie.destroyRelated', [
+                                    'id' => $advertentie->id,
+                                    'related_advertentie_id' => $related_advertentie->id
+                                ]) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="button red-button" type="submit">{{ __('Delete') }}</button>
@@ -123,7 +126,7 @@
                 @endforeach
             @else
                 {{ __('No related advertisements') }}
-            @endisset
+            @endif
         </div>
         @auth
             @if ($advertentie->user_id === auth()->id())
