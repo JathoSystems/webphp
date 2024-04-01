@@ -10,7 +10,6 @@ use Tests\DuskTestCase;
 
 class LoginRegistrationTest extends DuskTestCase
 {
-    use DatabaseTruncation;
     
     /**
      * A basic browser test example.

@@ -68,11 +68,13 @@ class DatabaseSeeder extends Seeder
         $admin->roles()->attach(Role::where('name', 'admin')->first());
 
         //-- Valid default user (buyer)
-        \App\Models\User::factory()->create([
+        $user = \App\Models\User::factory()->create([
             'name' => 'buyer',
             'email' => 'buyer@dev.com',
             'password' => Hash::make("!Ab12345"),
         ]);
+
+        $user->roles()->attach(Role::where('name', 'particulier')->first());
 
     }
 }
