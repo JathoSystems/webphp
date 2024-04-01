@@ -16,10 +16,12 @@ class AdvertentieController extends Controller
     {
         // both the advertenties and verhuur_advertenties 
         $favorieten = false;
+        $own_ads = false;
 
         return view('advertentie.index', [
             'advertenties' => Advertentie::all(),
             'favorieten' => $favorieten,
+            'own_ads' => $own_ads,
         ]);
     }
 
@@ -133,10 +135,12 @@ class AdvertentieController extends Controller
 
         $advertenties = auth()->user()->favoriete_advertenties()->get();
         $favorieten = true;
+        $own_ads = false;
 
         return view('advertentie.index', [
             'advertenties' => $advertenties,
             'favorieten' => $favorieten,
+            'own_ads' => $own_ads,
         ]);
     }
 
@@ -211,4 +215,22 @@ class AdvertentieController extends Controller
     
         return redirect()->route('advertentie.show', $advertentie->id);
     }
+
+    public function personal(){
+
+        $advertenties = auth()->user()->advertenties()
+            ->orderBy('expiration_date', 'asc')    
+            ->get();
+        $favorieten = false;
+        $own_ads = true;
+
+        return view('advertentie.index', [
+            'advertenties' => $advertenties,
+            'favorieten' => $favorieten,
+            'own_ads' => $own_ads,
+        ]);
+
+
+    }
+
 }
