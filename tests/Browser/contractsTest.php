@@ -6,12 +6,12 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class companiesTest extends DuskTestCase
+class contractsTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
      */
-    public function testViewCompanyOverview(): void
+    public function testViewContracts(): void
     {
         $this->browse(function (Browser $browser) {
 
@@ -20,16 +20,16 @@ class companiesTest extends DuskTestCase
 
             $browser->visit('/account/login')
                     ->assertSee('Login')
-                    ->type('email', 'buyer@dev.com')
+                    ->type('email', 'admin@dev.com')
                     ->type('password', '!Ab12345')
                     ->press('Login')
-                    ->assertSee('Companies')
-                    ->visit('/company')
-                    ->assertSee('Companies');
+                    ->assertSee('Contracts')
+                    ->visit('/contracts')
+                    ->assertSee('Uploaded contracts');
         });
     }
 
-    public function testViewCompanyOverviewDetails(): void
+    public function testAddContracts(): void
     {
         $this->browse(function (Browser $browser) {
 
@@ -38,15 +38,17 @@ class companiesTest extends DuskTestCase
 
             $browser->visit('/account/login')
                     ->assertSee('Login')
-                    ->type('email', 'buyer@dev.com')
+                    ->type('email', 'admin@dev.com')
                     ->type('password', '!Ab12345')
                     ->press('Login')
-                    ->assertSee('Companies')
-                    ->visit('/company')
-                    ->assertSee('Companies')
-                    ->assertSee('Show')
-                    ->clickLink(__('Show'))
-                    ->assertSee('Company page');
+                    ->assertSee('Contracts')
+                    ->visit('/contracts')
+                    ->assertSee('Uploaded contracts')
+                    ->assertSee('Add contract')
+                    ->clickLink(__('Add contract'))
+                    ->assertSee('Add contract')
+                    ->press('Save')
+                    ->assertSee('Uploaded contracts');
         });
     }
 }

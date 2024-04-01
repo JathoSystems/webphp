@@ -24,8 +24,7 @@
                     <th>{{ __('Approved') }}</th>
                     @if(auth()->user()->hasRole('zakelijk'))
                         <th></th>
-                    @endif
-                    
+                    @endif        
                 </tr>
             </thead>
             <tbody>
