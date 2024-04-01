@@ -56,6 +56,9 @@
                 @endforeach
             </tbody>
         </table>
+
+        <br><br>
+        {{$contracts->links()}}
     </div>
 </body>
 </html>

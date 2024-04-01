@@ -47,6 +47,9 @@
             </tbody>
         </table>
 
+        <br><br>
+        {{$rentingArticles->links()}}
+
     </div>
 </body>
 </html>

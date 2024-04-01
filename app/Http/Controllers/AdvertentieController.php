@@ -12,6 +12,9 @@ use League\Csv\Reader; //-- Gebruikt voor CSV uit te lezen
 
 class AdvertentieController extends Controller
 {
+
+    private $amountItemsPerPage = 5;
+
     public function index() // Simpele lijst van advertenties
     {
         // both the advertenties and verhuur_advertenties 
@@ -19,7 +22,7 @@ class AdvertentieController extends Controller
         $own_ads = false;
 
         return view('advertentie.index', [
-            'advertenties' => Advertentie::all(),
+            'advertenties' => Advertentie::paginate($this->amountItemsPerPage),
             'favorieten' => $favorieten,
             'own_ads' => $own_ads,
         ]);
@@ -133,7 +136,9 @@ class AdvertentieController extends Controller
 
     public function favorieten(){
 
-        $advertenties = auth()->user()->favoriete_advertenties()->get();
+        $advertenties = auth()->user()->favoriete_advertenties()
+            ->paginate($this->amountItemsPerPage);
+            
         $favorieten = true;
         $own_ads = false;
 
@@ -220,7 +225,8 @@ class AdvertentieController extends Controller
 
         $advertenties = auth()->user()->advertenties()
             ->orderBy('expiration_date', 'asc')    
-            ->get();
+            ->paginate($this->amountItemsPerPage);
+
         $favorieten = false;
         $own_ads = true;
 

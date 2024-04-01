@@ -12,13 +12,16 @@ use Carbon\Carbon;
 
 class RentingController extends Controller
 {
+
+    private $amountItemsPerPage = 5;
+
     public function index()
     {
 
         $hired_by_others = false;
         $personalRentals = Renting::where('user_id', auth()->user()->id)
             ->orderBy('date_from', 'asc')
-            ->get();
+            ->paginate($this->amountItemsPerPage);
 
         return view('renting.index', [
             'rentingArticles' => $personalRentals,
@@ -121,20 +124,22 @@ class RentingController extends Controller
 
         $hired_by_others = true;
         $all_rentals = Renting::all();
-        $personalRentals = [];
-
+    
         //-- Haal hier alle verhuur advertenties van artikelen die op jouw naam staan.
+        $personalRentalsQuery = Renting::query();
         foreach($all_rentals as $ar){
-
             $advertentie = Advertentie::findOrFail($ar->ad_id);
             if($advertentie->user_id === auth()->id()){
-                $personalRentals[]  = $ar;
+                $personalRentalsQuery->where('id', $ar->id);
             }
         }
-
+    
+        $personalRentals = $personalRentalsQuery->paginate($this->amountItemsPerPage);
+    
         return view('renting.index', [
             'rentingArticles' => $personalRentals,
             'hired_by_others' => $hired_by_others,
         ]);
     }
+    
 }

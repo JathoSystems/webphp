@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 
 class BedrijfController extends Controller
 {
+
+    private $amountItemsPerPage = 5;
+
     public function index()
     {
         return view('company.index', [
-            'companies' => \App\Models\Bedrijf::all(),
+            'companies' => \App\Models\Bedrijf::paginate($this->amountItemsPerPage),
         ]);
     }
 

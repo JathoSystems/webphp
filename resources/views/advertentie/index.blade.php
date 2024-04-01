@@ -111,7 +111,11 @@
                 @endforeach
             </tbody>
         </table>
+        <br><br>
+        <!-- Pagination Links -->
+        {{ $advertenties->links() }}
     </div>
+
 </body>
 
 </html>

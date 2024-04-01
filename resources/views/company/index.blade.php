@@ -34,6 +34,9 @@
                 @endforeach
             </tbody>
         </table>
+
+        <br><br>
+        {{$companies->links()}}
     </div>
 </body>
 

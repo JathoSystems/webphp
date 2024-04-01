@@ -44,6 +44,11 @@
                 @endforeach
             </tbody>
         </table>
+        <br><br>
+        <!-- Pagination Links -->
+        {{ $advertisers->links() }}
+
+
     </div>
 </body>
 
