@@ -39,7 +39,7 @@
                             <td>{{ $ra->user->name }}</td>
                         @endif
                         <td>{{ $ra->ad->title }}</td>
-                        <td>{{ $ra->ad->price }}</td>
+                        <td>€{{ $ra->ad->price }}</td>
                         <td>{{ date('d-m-Y', strtotime($ra->date_from)) }}</td>
                         <td>{{ date('d-m-Y', strtotime($ra->date_to)) }}</td>
                     </tr>

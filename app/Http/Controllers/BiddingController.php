@@ -10,6 +10,7 @@ class BiddingController extends Controller
 {
 
     private $amountItemsPerPage = 5;
+    private $maxAmountOfBidsPerAccount = 4;
 
     public function index() {
 
@@ -37,21 +38,21 @@ class BiddingController extends Controller
             'price' => 'required',
         ]);
 
-        // Validate if the bid is higher than the current highest bid
-        $highestBid = Bidding::where('ad_id', $request->ad_id)->max('price');
-        if ($request->price <= $highestBid) {
-            return redirect()->back()->withErrors(['price' => __("Bid is less than the current highest bid (€$highestBid)")]);
+
+        $valid = $this->checkAmountAdvertisementsAccount($request);
+        if ($valid){
+            // Validate if the bid is higher than the current highest bid
+            $highestBid = Bidding::where('ad_id', $request->ad_id)->max('price');
+            if ($request->price <= $highestBid) {
+                return redirect()->back()->withErrors(['price' => __("Bid is less than the current highest bid (€$highestBid)")]);
+            }
+
+            Bidding::create($request->all());
+
+            return redirect()->route('bidding.index');
         }
 
-        // Validate if the user has 4 or more bids
-        $bids = Bidding::where('user_id', $request->user_id)->count();
-        if ($bids >= 4) {
-            return redirect()->back()->withErrors(['price' => __("Bid limit (4) reached")]);
-        }
-
-        Bidding::create($request->all());
-
-        return redirect()->route('bidding.index');
+        return redirect()->back()->withErrors(['price' => __("You already have the most amount of bids allowed (4)")]);        
     }
 
     public function show(Bidding $bidding) {
@@ -116,5 +117,24 @@ class BiddingController extends Controller
         ]);
 
 
+    }
+
+    private function checkAmountAdvertisementsAccount($request){
+
+
+        $highestBids = [];
+        $bids = Bidding::where('user_id', auth()->user()->id)->get();
+
+        foreach($bids as $bid){
+            if($bid->isHighestBid($bid->ad_id, $bid->price)){
+                $highestBids[] = $bid;
+            }
+        }
+
+        if($this->maxAmountOfBidsPerAccount > count($highestBids)){
+            return true;
+        } else{
+            return false;
+        }
     }
 }
