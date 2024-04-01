@@ -11,16 +11,56 @@
 <body>
     <x-navbar />
     <div class="container">
-        <h1>{{__("Your bids")}}</h1>
-        <ul>
-            @foreach ($bids as $bid)
-                <li>
-                    <strong>{{ $bid->user->name }}</strong> {{__("bids")}} €{{ $bid->price }} {{__("on")}}
-                    <strong>{{ $bid->ad->title }}</strong>
-                    <a href="{{ route('bidding.show', $bid) }}">{{ __('View') }}</a>
-                </li>
-            @endforeach
-        </ul>
+        @if (!$others_bids)
+            <h1>{{__("Your bids")}}</h1>
+        @else
+            <h1>{{__("Bids on your products")}}</h1>
+        @endif
+        
+        @if ((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && !$others_bids)
+            <a class="button blue-button" href="{{ route('bidding.othersBids')}}">{{ __('Bids on your products') }}</a>
+        @elseif((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && $others_bids)
+            <a class="button blue-button" href="{{ route('bidding.index')}}">{{ __('My personal bids') }}</a>
+        @endif
+        <br><br>
+        <table>
+            <thead>
+                <tr>
+                    @if ((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && $others_bids)
+                        <th>{{ __('Bid made by') }}</th>
+                    @endif
+                    <th>{{ __('Item') }}</th>
+                    <th>{{ __('Price') }}</th>
+                    <th>{{ __('Bid added on') }}</th>
+                    <th>{{ __('Advertisement expires on') }}</th>
+                    <th>{{ __('Highest bid') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($bids as $bid)
+                    <tr>
+                        @if ((auth()->user()->hasRole("zakelijk") || auth()->user()->hasRole("particulier")) && $others_bids)
+                            <td>{{ $bid->user->name }}</td>
+                        @endif
+                        <td>{{ $bid->ad->title }}</td>
+                        <td>{{ $bid->price }}</td>
+                        <td>{{ $bid->created_at->format('d-m-Y H:i') }}</td>
+                        <td>{{ $bid->ad->expiration_date->format('d-m-Y H:i') }}</td>
+                        <td>
+                        @if($bid->isHighestBid($bid->ad_id, $bid->price) == 1)
+                            {{ __('Yes') }}
+                        @else
+                            {{ __('No') }}
+                        @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <br><br>
+        {{$bids->links()}}
+
     </div>
 </body>
 
