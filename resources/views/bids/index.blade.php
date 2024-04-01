@@ -43,7 +43,7 @@
                             <td>{{ $bid->user->name }}</td>
                         @endif
                         <td>{{ $bid->ad->title }}</td>
-                        <td>{{ $bid->price }}</td>
+                        <td>€{{ $bid->price }}</td>
                         <td>{{ $bid->created_at->format('d-m-Y H:i') }}</td>
                         <td>{{ $bid->ad->expiration_date->format('d-m-Y H:i') }}</td>
                         <td>

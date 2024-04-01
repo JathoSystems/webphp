@@ -14,6 +14,7 @@ class AdvertentieController extends Controller
 {
 
     private $amountItemsPerPage = 5;
+    private $maxAmountAdsPerType = 4;
 
     public function index() // Simpele lijst van advertenties
     {
@@ -59,20 +60,28 @@ class AdvertentieController extends Controller
             'image' => 'sometimes|file|image|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $date = now()->format('YmdHis');
-            
-            // change image filename to date and time
-            $request->file('image')->storeAs('public/images', $date . '.' . $request->file('image')->extension());
+        //-- Check voor aantal advertenties van type
+        $valid = $this->checkAmountAdvertisementsAccount($request->type);
 
-            $request->merge([
-                'image_url' => $date . '.' . $request->file('image')->extension(),
-            ]);
+        if($valid){
+            if ($request->hasFile('image')) {
+                $date = now()->format('YmdHis');
+                
+                // change image filename to date and time
+                $request->file('image')->storeAs('public/images', $date . '.' . $request->file('image')->extension());
+    
+                $request->merge([
+                    'image_url' => $date . '.' . $request->file('image')->extension(),
+                ]);
+            }
+    
+            $advertentie = auth()->user()->advertenties()->create($request->all());
+    
+            return redirect()->route('advertentie.index');
         }
 
-        $advertentie = auth()->user()->advertenties()->create($request->all());
-
-        return redirect()->route('advertentie.index');
+        return redirect()->back();
+        
     }
 
     public function edit($id)
@@ -181,24 +190,35 @@ class AdvertentieController extends Controller
         $records = $reader->getRecords();
 
         foreach ($records as $record) {
-            $values = explode(';', $record["Titel;Omschrijving;Prijs;Einddatum"]);
+            $values = explode(';', $record["Titel;Omschrijving;Prijs;Einddatum;Type"]);
             $date = \DateTime::createFromFormat('d-m-Y', $values[3]);
             $formatted_date = $date->format('Y-m-d H:i:s');
 
             $price = str_replace(',', '.', $values[2]);
+
+            
+            $raw_type = "verhuur_advertentie"; //-- Default waarde om op terug te vallen
+            if (strpos($values[4], "verkoop") !== false) {
+                $raw_type = "advertentie";
+            } 
 
             $advertentie_obj = new Advertentie(); 
             $advertentie_obj->title = $values[0];
             $advertentie_obj->description = $values[1];
             $advertentie_obj->price = $price;
             $advertentie_obj->expiration_date = $formatted_date;
+            $advertentie_obj->type = $raw_type;
             $advertentie_obj->status = "beschikbaar";
             $advertentie_obj->QR_code = "N/A";
             $advertentie_obj->image_url = "N/A";
             
             $advertentie_array = $advertentie_obj->toArray();
 
-            $advertentie = auth()->user()->advertenties()->create($advertentie_array);
+            //-- Check voor type en voeg aan tot {maximaal nummer} van type.
+            $valid = $this->checkAmountAdvertisementsAccount($advertentie_obj->type);
+            if ($valid){
+                $advertentie = auth()->user()->advertenties()->create($advertentie_array);
+            }
         }
 
         return redirect()->route('advertentie.index');
@@ -242,6 +262,22 @@ class AdvertentieController extends Controller
         ]);
 
 
+    }
+
+    private function checkAmountAdvertisementsAccount($type){
+        $advertenties = auth()->user()->advertenties()->get();
+        $countOfType = 0;
+        foreach ($advertenties as $advertentie) {
+            if ($advertentie->type == $type && $advertentie->expiration_date >= now()) { //-- Je mag 4 (lopende) advertenties hebben van hetzelfde type
+                $countOfType++;
+            }
+        }
+
+        if ($countOfType < $this->maxAmountAdsPerType) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
