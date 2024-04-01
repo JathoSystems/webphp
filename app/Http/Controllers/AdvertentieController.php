@@ -19,7 +19,7 @@ class AdvertentieController extends Controller
         $own_ads = false;
 
         return view('advertentie.index', [
-            'advertenties' => Advertentie::all(),
+            'advertenties' => Advertentie::paginate(5),
             'favorieten' => $favorieten,
             'own_ads' => $own_ads,
         ]);
