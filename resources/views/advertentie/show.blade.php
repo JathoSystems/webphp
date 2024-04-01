@@ -15,7 +15,7 @@
 
         <h1>{{ $advertentie->title }}</h1>
         <p>{{ $advertentie->description }}</p>
-        <p>{{ $advertentie->price }}</p>
+        <p>€{{ $advertentie->price }}</p>
         @if ($advertentie->image_url === null)
             {{ __('No image') }}
         @else
@@ -99,7 +99,7 @@
                     <div class="ad">
                         <h3>{{ $related_advertentie->title }}</h3>
                         <p>{{ $related_advertentie->description }}</p>
-                        <p>{{ $related_advertentie->price }}</p>
+                        <p>€{{ $related_advertentie->price }}</p>
                         @if ($related_advertentie->image_url === null)
                             {{ __('No image') }}
                         @else
