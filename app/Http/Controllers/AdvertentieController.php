@@ -33,10 +33,15 @@ class AdvertentieController extends Controller
     {
         $advertentie = Advertentie::findOrFail($id);
         $reviews = Review::where('advertentie_id', $id)->get();
+        
+        $related_advertentie_ids = $advertentie->related_advertenties->pluck('related_advertentie_id');
+        
+        $related_advertenties = Advertentie::whereIn('id', $related_advertentie_ids)->get();
 
         return view('advertentie.show', [
             'advertentie' => $advertentie,
             'reviews' => $reviews,
+            'related_advertenties' => $related_advertenties,
         ]);
     }
 
