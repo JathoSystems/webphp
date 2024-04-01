@@ -67,6 +67,7 @@ Route::get('importeren', [AdvertentieController::class, 'importeren'])->middlewa
 Route::post('importAdvertenties', [AdvertentieController::class, 'importAdvertenties'])->middleware('auth')->name('advertentie.importAdvertenties');
 
 Route::get('bidding', [BiddingController::class, 'index'])->middleware('auth')->name('bidding.index');
+Route::get('bidding/othersBids', [BiddingController::class, 'othersBids'])->middleware('auth')->name('bidding.othersBids');
 Route::get('bidding/create/{ad}', [BiddingController::class, 'create'])->middleware('auth')->name('bidding.create');
 Route::post('bidding', [BiddingController::class, 'store'])->middleware('auth')->name('bidding.store');
 Route::get('bidding/{bidding}', [BiddingController::class, 'show'])->middleware('auth')->name('bidding.show');

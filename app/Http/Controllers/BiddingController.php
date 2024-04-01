@@ -8,9 +8,18 @@ use App\Models\Advertentie;
 
 class BiddingController extends Controller
 {
+
+    private $amountItemsPerPage = 5;
+
     public function index() {
+
+        $others_bids = false;
+        $personalBids = Bidding::where('user_id', auth()->user()->id)
+            ->paginate($this->amountItemsPerPage);
+
         return view('bids.index', [
-            'bids' => Bidding::all(),
+            'bids' => $personalBids,
+            'others_bids' => $others_bids
         ]);
     }
 
@@ -82,5 +91,30 @@ class BiddingController extends Controller
         $bidding->delete();
 
         return redirect()->route('bidding.index');
+    }
+
+    public function othersBids(){
+
+
+        $others_bids = true;
+        $all_bids = Bidding::all();
+    
+        //-- Haal hier alle verhuur advertenties van artikelen die op jouw naam staan.
+        $personalBiddingsQuery = Bidding::query();
+        foreach($all_bids as $bid){
+            $advertentie = Advertentie::findOrFail($bid->ad_id);
+            if($advertentie->user_id === auth()->id()){
+                $personalBiddingsQuery->where('id', $bid->id);
+            }
+        }
+    
+        $all_bids = $personalBiddingsQuery->paginate($this->amountItemsPerPage);
+    
+        return view('bids.index', [
+            'bids' => $all_bids,
+            'others_bids' => $others_bids,
+        ]);
+
+
     }
 }
