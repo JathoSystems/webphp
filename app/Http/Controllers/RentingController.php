@@ -73,7 +73,9 @@ class RentingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('renting.show', [
+            'rentingArticle' => Renting::findOrFail($id),
+        ]);
     }
 
     /**
@@ -139,6 +141,39 @@ class RentingController extends Controller
         return view('renting.index', [
             'rentingArticles' => $personalRentals,
             'hired_by_others' => $hired_by_others,
+        ]);
+    }
+
+    public function return(Renting $renting){
+        $advertentie = Advertentie::findOrFail($renting->ad_id);
+
+        return view('renting.return', [
+            'renting' => $renting,
+            'advertentie' => $advertentie,
+        ]);
+    }
+
+    public function returnUpdate(Request $request, Renting $renting){
+        // Handle image upload
+        $request->validate([
+            'image_upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $date = now()->format('YmdHis');
+        $request->file('image_upload')->storeAs('public/images', $date . '.' . $request->file('image_upload')->extension());
+        $image_url = $date . '.' . $request->file('image_upload')->extension();
+
+
+        // Add the slijtage_percentage to slijtage
+        $advertentie = Advertentie::findOrFail($renting->ad_id);
+        $advertentie->update([
+            'slijtage' => $advertentie->slijtage + $advertentie->slijtage_percentage,
+            'image_upload' => $image_url,
+        ]);
+
+        return view('renting.index', [
+            'rentingArticles' => Renting::where('user_id', auth()->user()->id)->paginate($this->amountItemsPerPage),
+            'hired_by_others' => false,
         ]);
     }
     

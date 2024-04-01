@@ -54,6 +54,12 @@
                 <p>{{ $message }}</p>
             @enderror
 
+            <label for="slijtage_percentage">{{ __("Damage per return for rent adverts (optional)") }}</label>
+            <input type="number" name="slijtage_percentage" id="slijtage_percentage" value="{{ old('slijtage_percentage') }}" step="1">
+            @error('slijtage_percentage')
+                <p>{{ $message }}</p>
+            @enderror
+
             {{-- Hidden field status="beschikbaar" --}}
             <input type="hidden" name="status" value="beschikbaar">
             {{-- Hidden field QR code, empty for now but we can generate it later --}}
