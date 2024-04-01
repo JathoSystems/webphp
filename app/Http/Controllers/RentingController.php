@@ -167,7 +167,7 @@ class RentingController extends Controller
         // Add the slijtage_percentage to slijtage
         $advertentie = Advertentie::findOrFail($renting->ad_id);
         $advertentie->update([
-            'slijtage' => $advertentie->slijtage + $request->slijtage_percentage,
+            'slijtage' => $advertentie->slijtage + $advertentie->slijtage_percentage,
             'image_upload' => $image_url,
         ]);
 

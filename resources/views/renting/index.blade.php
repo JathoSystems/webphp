@@ -46,13 +46,12 @@
                         <td>{{ date('d-m-Y', strtotime($ra->date_from)) }}</td>
                         <td>{{ date('d-m-Y', strtotime($ra->date_to)) }}</td>
                         <td>
-                            @if (!$hired_by_others)
+                            @if (!$hired_by_others && $ra->ad->image_upload == null)
                                 <a class="button blue-button"
                                     href="{{ route('renting.return', $ra) }}">{{ __('Return') }}</a>
-                            @else
-                                <a class="button blue-button"
-                                    href="{{ route('renting.show', $ra) }}">{{ __('Show') }}</a>
                             @endif
+                            <a class="button blue-button"
+                                href="{{ route('renting.show', $ra) }}">{{ __('Show') }}</a>
                         </td>
                     </tr>
                 @endforeach

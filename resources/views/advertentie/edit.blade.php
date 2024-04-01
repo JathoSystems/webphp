@@ -57,6 +57,10 @@
                 <p>{{ $message }}</p>
             @enderror
 
+            <label for="slijtage_percentage">{{ __("Damage per return for rent adverts (optional)") }}</label>
+            <input type="number" name="slijtage_percentage" id="slijtage_percentage"
+                value="{{ $advertentie->slijtage_percentage }}" step="1">
+            @error('slijtage_percentage')
 
             {{-- Hidden field status="beschikbaar" --}}
             <input type="hidden" name="status" value="beschikbaar">
