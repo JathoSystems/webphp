@@ -185,24 +185,35 @@ class AdvertentieController extends Controller
         $records = $reader->getRecords();
 
         foreach ($records as $record) {
-            $values = explode(';', $record["Titel;Omschrijving;Prijs;Einddatum"]);
+            $values = explode(';', $record["Titel;Omschrijving;Prijs;Einddatum;Type"]);
             $date = \DateTime::createFromFormat('d-m-Y', $values[3]);
             $formatted_date = $date->format('Y-m-d H:i:s');
 
             $price = str_replace(',', '.', $values[2]);
+
+            
+            $raw_type = "verhuur_advertentie"; //-- Default waarde om op terug te vallen
+            if (strpos($values[4], "verkoop") !== false) {
+                $raw_type = "advertentie";
+            } 
 
             $advertentie_obj = new Advertentie(); 
             $advertentie_obj->title = $values[0];
             $advertentie_obj->description = $values[1];
             $advertentie_obj->price = $price;
             $advertentie_obj->expiration_date = $formatted_date;
+            $advertentie_obj->type = $raw_type;
             $advertentie_obj->status = "beschikbaar";
             $advertentie_obj->QR_code = "N/A";
             $advertentie_obj->image_url = "N/A";
             
             $advertentie_array = $advertentie_obj->toArray();
 
-            $advertentie = auth()->user()->advertenties()->create($advertentie_array);
+            //-- Check voor type en voeg aan tot {maximaal nummer} van type.
+            $valid = $this->checkAmountAdvertisementsAccount($advertentie_obj->type);
+            if ($valid){
+                $advertentie = auth()->user()->advertenties()->create($advertentie_array);
+            }
         }
 
         return redirect()->route('advertentie.index');

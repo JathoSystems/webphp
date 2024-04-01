@@ -11,7 +11,8 @@
     <div class="container">
 
         <h1>Advertenties importeren</h1>
-        <p>Note: De import verwacht een .csv bestand met de kolommen "Titel", "Omschrijving", "Prijs", "Einddatum".</p> <br>
+        <p>Note: De import verwacht een .csv bestand met de kolommen "Titel", "Omschrijving", "Prijs", "Einddatum", "Type".</p> <br>
+        <p>Note: De kolom "Type" wilt alleen de waardes accepteren 'verhuur' / 'verkoop' </p> <br>
 
         @if ($errors->any())
             <div>
