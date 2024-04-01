@@ -37,23 +37,23 @@ class BiddingController extends Controller
             'ad_id' => 'required',
             'price' => 'required',
         ]);
-
-
+    
         $valid = $this->checkAmountAdvertisementsAccount($request);
-        if ($valid){
+        if ($valid) {
             // Validate if the bid is higher than the current highest bid
             $highestBid = Bidding::where('ad_id', $request->ad_id)->max('price');
             if ($request->price <= $highestBid) {
                 return redirect()->back()->withErrors(['price' => __("Bid is less than the current highest bid (€$highestBid)")]);
             }
-
+    
             Bidding::create($request->all());
-
+    
             return redirect()->route('bidding.index');
+        } else {
+            return redirect()->back()->withErrors(['price' => __("You already have the most amount of bids allowed (4)")]);
         }
-
-        return redirect()->back()->withErrors(['price' => __("You already have the most amount of bids allowed (4)")]);        
     }
+    
 
     public function show(Bidding $bidding) {
         return view('bids.show', [

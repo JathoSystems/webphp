@@ -40,27 +40,26 @@
                         <button class="button red-button" type="submit">{{ __('Delete') }}</button>
                     </form>
                 @else
-                    @if ($advertentie->expiration_date > now())
-                        @if ($advertentie->type === 'verhuur_advertentie')
+                    @if($advertentie->type == 'verhuur_advertentie')
+                        @if($advertentie->expiration_date > now()) 
                         <a class="button blue-button"
                             href="{{ route('renting.create', ['ad' => $advertentie->id]) }}">{{ __('Hire item') }}</a>
-                        @else
-                        <a class="button blue-button"
-                            href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Place bid') }}</a>
                         @endif
+                    
+                    <br><br>
+                    
+                    <a class="button blue-button"
+                        href="{{ route('advertentie.review', ['id' => $advertentie->id]) }}">{{ __('Place review') }}</a>
+                    <br>
+                    @else
+                        @if($advertentie->expiration_date > now()) 
+                        <a class="button blue-button"
+                            href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Purchase item') }}</a>
 
                         <br><br>
 
-                        <a class="button blue-button"
-                            href="{{ route('advertentie.review', ['id' => $advertentie->id]) }}">{{ __('Place review') }}</a>
-                        <br>
-                    @else
-                        @if ($advertentie->expiration_date > now())
-                            <a class="button blue-button"
-                                href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Place bid') }}</a>
                         @endif
                     @endif
-
                 @endif
             @endauth
             <a class="button blue-button" href="{{ route('advertentie.index') }}">{{ __('Back to overview') }}</a>
@@ -94,7 +93,7 @@
 
         <h2>{{ __('Related advertisements') }}</h2>
         <div class="ads">
-            @if ($related_advertenties->count() > 0)
+            @if($related_advertenties->count() > 0)
                 @foreach ($related_advertenties as $related_advertentie)
                     <div class="ad">
                         <h3>{{ $related_advertentie->title }}</h3>
@@ -117,12 +116,10 @@
                             href="{{ route('advertentie.show', $related_advertentie->id) }}">{{ __('View') }}</a>
                         @auth
                             @if ($advertentie->user_id === auth()->id())
-                                <form
-                                    action="{{ route('advertentie.destroyRelated', [
-                                        'id' => $advertentie->id,
-                                        'related_advertentie_id' => $related_advertentie->id,
-                                    ]) }}"
-                                    method="post">
+                                <form action="{{ route('advertentie.destroyRelated', [
+                                    'id' => $advertentie->id,
+                                    'related_advertentie_id' => $related_advertentie->id
+                                ]) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="button red-button" type="submit">{{ __('Delete') }}</button>
