@@ -40,22 +40,22 @@
                         <button class="button red-button" type="submit">{{ __('Delete') }}</button>
                     </form>
                 @else
-                    @if($advertentie->type == "verhuur_advertentie")
-                    <a class="button blue-button"
-                        href="{{ route('renting.create', ['ad' => $advertentie->id]) }}">{{ __('Hire item') }}</a>
-                    
-                    <br><br>
-                    
-                    <a class="button blue-button"
-                        href="{{ route('advertentie.review', ['id' => $advertentie->id]) }}">{{ __('Place review') }}</a>
-                    <br>
-                    @else
-                        @if($advertentie->expiration_date > now()) 
+                    @if ($advertentie->type == 'verhuur_advertentie')
                         <a class="button blue-button"
-                            href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Place bid') }}</a>
+                            href="{{ route('renting.create', ['ad' => $advertentie->id]) }}">{{ __('Hire item') }}</a>
+
+                        <br><br>
+
+                        <a class="button blue-button"
+                            href="{{ route('advertentie.review', ['id' => $advertentie->id]) }}">{{ __('Place review') }}</a>
+                        <br>
+                    @else
+                        @if ($advertentie->expiration_date > now())
+                            <a class="button blue-button"
+                                href="{{ route('bidding.create', ['ad' => $advertentie->id]) }}">{{ __('Place bid') }}</a>
                         @endif
                     @endif
-                    
+
                 @endif
             @endauth
             <a class="button blue-button" href="{{ route('advertentie.index') }}">{{ __('Back to overview') }}</a>
@@ -63,7 +63,7 @@
 
         <br><br>
         @auth
-            @if ($advertentie->type == "verhuur_advertentie")
+            @if ($advertentie->type == 'verhuur_advertentie')
                 <h2>Reviews</h2>
                 <table>
                     <thead>
@@ -86,6 +86,51 @@
             @endif
         @endauth
 
+
+        <h2>{{ __('Related advertisements') }}</h2>
+        <div class="ads">
+            @isset($related_advertenties)
+                @foreach ($related_advertenties as $related_advertentie)
+                    <div class="ad">
+                        <h3>{{ $related_advertentie->title }}</h3>
+                        <p>{{ $related_advertentie->description }}</p>
+                        <p>{{ $related_advertentie->price }}</p>
+                        @if ($related_advertentie->image_url === null)
+                            {{ __('No image') }}
+                        @else
+                            <img src="/storage/images/{{ $related_advertentie->image_url }}"
+                                alt="{{ $related_advertentie->title }}">
+                        @endif
+                        <p>
+                            @if ($advertentie->type === 'verhuur_advertentie')
+                                {{ __('Rent advertisement') }}
+                            @else
+                                {{ __('Purchase advertisement') }}
+                            @endif
+                        </p>
+                        <a class="button blue-button"
+                            href="{{ route('advertentie.show', $related_advertentie->id) }}">{{ __('View') }}</a>
+                        @auth
+                            @if ($advertentie->user_id === auth()->id())
+                                <form action="{{ route('advertentie.destroy', $advertentie) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="button red-button" type="submit">{{ __('Delete') }}</button>
+                                </form>
+                            @endif
+                        @endauth
+                    </div>
+                @endforeach
+            @else
+                {{ __('No related advertisements') }}
+            @endisset
+        </div>
+        @auth
+            @if ($advertentie->user_id === auth()->id())
+                <a class="button blue-button"
+                    href="{{ route('advertentie.createRelated', ['id' => $advertentie->id]) }}">{{ __('Create related advertisement') }}</a>
+            @endif
+        @endauth
 
         <br><br>
         <h2>{{ __('Share') }}</h2>

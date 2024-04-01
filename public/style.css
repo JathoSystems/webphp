@@ -319,7 +319,7 @@ img {
     margin-bottom: 1rem;
 }
 
-svg{
+svg.w-5 {
     height:20px !important;
 }
 
