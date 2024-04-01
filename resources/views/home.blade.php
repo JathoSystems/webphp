@@ -31,7 +31,7 @@
                     <div class="ad">
                         <h3>{{ $advertentie->title }}</h3>
                         <p>{{ $advertentie->description }}</p>
-                        <p>{{ $advertentie->price }}</p>
+                        <p>€{{ $advertentie->price }}</p>
                         <img src="storage/images/{{ $advertentie->image_url }}" alt="{{ $advertentie->title }}"
                             style="width: 100px;">
                         <p>

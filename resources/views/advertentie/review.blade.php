@@ -13,7 +13,7 @@
             @isset($advertentie)
                 <h1>{{ $advertentie->title }}</h1>
                 <p>{{ $advertentie->description }}</p>
-                <p>{{ $advertentie->price }}</p>
+                <p>€{{ $advertentie->price }}</p>
                 @if ($advertentie->image_url === null)
                     <p>{{ __('No image') }}</p>
                 @else
