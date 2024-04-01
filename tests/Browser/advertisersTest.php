@@ -38,7 +38,7 @@ class advertisersTest extends DuskTestCase
                     ->assertSee('Private / Business')
                     ->assertSee('View')
                     ->click('.buttons button[type="submit"]')
-                    ->assertSee('Place review');
+                    ->assertSee('Back to overview');
         });
     }
 }
