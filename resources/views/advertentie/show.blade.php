@@ -41,8 +41,10 @@
                     </form>
                 @else
                     @if($advertentie->type == "verhuur_advertentie")
-                    <a class="button blue-button"
-                        href="{{ route('renting.create', ['ad' => $advertentie->id]) }}">{{ __('Hire item') }}</a>
+                        @if($advertentie->expiration_date > now()) 
+                        <a class="button blue-button"
+                            href="{{ route('renting.create', ['ad' => $advertentie->id]) }}">{{ __('Hire item') }}</a>
+                        @endif
                     
                     <br><br>
                     

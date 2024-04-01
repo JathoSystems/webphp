@@ -14,6 +14,7 @@ class AdvertentieController extends Controller
 {
 
     private $amountItemsPerPage = 5;
+    private $maxAmountAdsPerType = 4;
 
     public function index() // Simpele lijst van advertenties
     {
@@ -54,20 +55,28 @@ class AdvertentieController extends Controller
             'image' => 'sometimes|file|image|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $date = now()->format('YmdHis');
-            
-            // change image filename to date and time
-            $request->file('image')->storeAs('public/images', $date . '.' . $request->file('image')->extension());
+        //-- Check voor aantal advertenties van type
+        $valid = $this->checkAmountAdvertisementsAccount($request->type);
 
-            $request->merge([
-                'image_url' => $date . '.' . $request->file('image')->extension(),
-            ]);
+        if($valid){
+            if ($request->hasFile('image')) {
+                $date = now()->format('YmdHis');
+                
+                // change image filename to date and time
+                $request->file('image')->storeAs('public/images', $date . '.' . $request->file('image')->extension());
+    
+                $request->merge([
+                    'image_url' => $date . '.' . $request->file('image')->extension(),
+                ]);
+            }
+    
+            $advertentie = auth()->user()->advertenties()->create($request->all());
+    
+            return redirect()->route('advertentie.index');
         }
 
-        $advertentie = auth()->user()->advertenties()->create($request->all());
-
-        return redirect()->route('advertentie.index');
+        return redirect()->back();
+        
     }
 
     public function edit($id)
@@ -237,6 +246,22 @@ class AdvertentieController extends Controller
         ]);
 
 
+    }
+
+    private function checkAmountAdvertisementsAccount($type){
+        $advertenties = auth()->user()->advertenties()->get();
+        $countOfType = 0;
+        foreach ($advertenties as $advertentie) {
+            if ($advertentie->type == $type && $advertentie->expiration_date >= now()) { //-- Je mag 4 (lopende) advertenties hebben van hetzelfde type
+                $countOfType++;
+            }
+        }
+
+        if ($countOfType < $this->maxAmountAdsPerType) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
