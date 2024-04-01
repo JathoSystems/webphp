@@ -21,6 +21,7 @@ class Advertentie extends Model
         'status',
         'QR_code',
         'slijtage',
+        'slijtage_percentage',
         'image_upload',
     ];
     

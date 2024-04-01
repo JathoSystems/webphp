@@ -83,6 +83,9 @@ Route::get('renting', [RentingController::class, 'index'])->middleware('auth')->
 Route::get('renting/create/{ad}', [RentingController::class, 'create'])->middleware('auth')->name('renting.create');
 Route::post('renting', [RentingController::class, 'store'])->middleware('auth')->name('renting.store');
 Route::get('renting/rentedOut', [RentingController::class, 'personal'])->middleware('auth')->name('renting.personal');
+Route::get('renting/return/{renting}', [RentingController::class, 'return'])->middleware('auth')->name('renting.return');
+Route::put('renting/return/{renting}', [RentingController::class, 'returnUpdate'])->middleware('auth')->name('renting.returnUpdate');
+Route::get('renting/{renting}', [RentingController::class, 'show'])->middleware('auth')->name('renting.show');
 
 
 Route::get('company/create', [BedrijfController::class, 'create'])->middleware('auth')->name('company.create');
